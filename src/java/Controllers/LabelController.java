@@ -6,7 +6,7 @@
 package Controllers;
 
 import DBTools.LabelDao;
-import Models.Label;
+
 import Models.LabelsListItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
