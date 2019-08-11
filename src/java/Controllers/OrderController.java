@@ -54,7 +54,13 @@ public class OrderController {
 
     @RequestMapping(value = "/AdminOrderPage.htm", method = RequestMethod.GET)
 
-    public String adminOrderPage(ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String adminOrderPage(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+
+        User user = (User) session.getAttribute("user");
+
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
 
         User customer = userDao.getUserByID(user_id);
 
@@ -79,9 +85,13 @@ public class OrderController {
 
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
     public String saveOrder(ModelMap model, Order order, HttpSession session) {
-        String dateStatus = calendarDao.checkTheDate(order.getDue_day());
+        User user = (User) session.getAttribute("user");
 
-        System.out.println("user from session at saveOrder: " + session.getAttribute("user"));
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
+
+        String dateStatus = calendarDao.checkTheDate(order.getDue_day());
 
         if (!dateStatus.equals("open")) {
             String reason = dateStatus;
@@ -105,10 +115,11 @@ public class OrderController {
 
     @RequestMapping(value = "/ModifyOrderPage.htm", method = RequestMethod.GET)
     public String goToModifyOrderPage(ModelMap model, HttpSession session, @RequestParam(value = "order_id") int order_id) {
+        User user = (User) session.getAttribute("user");
 
-        System.out.println("session at ModifyOrderPage: " + session);
-        System.out.println("user from session at ModifyOrderPage: " + session.getAttribute("user"));
-
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
         Order order = orderDao.getOrderByID(order_id);
         model.addAttribute("order", order);
         return "ModifyOrderPage";
@@ -116,9 +127,11 @@ public class OrderController {
 
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
     public String modifyOrder(ModelMap model, Order order, HttpSession session) {
+        User user = (User) session.getAttribute("user");
 
-        System.out.println("user from session at modifyOrderButtonClick: " + session.getAttribute("user"));
-
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
         int newOrderId = orderDao.insertOrder(order);
         orderDao.modifyOrder(order, newOrderId, session);
         return "redirect:/AdminMainPage.htm";
@@ -126,7 +139,11 @@ public class OrderController {
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
     public String CancelOrder(ModelMap model, Order order, HttpSession session) {
+        User user = (User) session.getAttribute("user");
 
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
         orderDao.cancelOrder(order, session);
 
         return "redirect:/AdminMainPage.htm";
@@ -158,8 +175,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogeneratorActivation.htm", method = RequestMethod.GET)
-    public String autogeneratorActivation(ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String autogeneratorActivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+        User user = (User) session.getAttribute("user");
 
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
         if (!orderTemplateDao.autogeneratorActivated(user_id)) {
 
             List< FavoriteProduct> favoriteProductsList = favoriteProductsDao.getFavoriteProductsByCustomerID(user_id);
@@ -171,8 +192,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogeneratorDeactivation.htm", method = RequestMethod.GET)
-    public String autogeneratorDeactivation(ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String autogeneratorDeactivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+        User user = (User) session.getAttribute("user");
 
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
         orderTemplateDao.deactivateAutogenerator(user_id);
 
         return "redirect:/OrderPlan.htm?user_id=" + user_id + "&day=NoDay";
@@ -180,14 +205,17 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/LockedOrdersPage.htm", method = RequestMethod.GET)
-    public String LockedOrders(ModelMap model) {
+    public String LockedOrders(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
 
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
         LinkedHashMap<Integer, Order> lockedOrdersMap = orderDao.getLockedOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList_LockedOrders = mixCustomer(customersMap, lockedOrdersMap);
 
-        System.out.println("ActiveOrdersMap" + lockedOrdersMap.size());
         model.addAttribute("activeOrdersMap", lockedOrdersMap);
         model.addAttribute("filledCustomersList_LockedOrders", filledCustomersList_LockedOrders);
 
@@ -195,7 +223,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/ObserverPage.htm", method = RequestMethod.GET)
-    public String LockedOrdersObserverPage(ModelMap model) {
+    public String LockedOrdersObserverPage(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
+
+        if (!user.getRole().equals("observer")) {
+            return "index";
+        }
 
         LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
         LinkedHashMap<Integer, Order> lockedOrdersMap = orderDao.getLockedOrdersMap();
@@ -219,7 +252,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/OrderedItemsList_ActiveOrders", method = RequestMethod.GET)
-    public String OrderedItemsList(ModelMap model) {
+    public String OrderedItemsList(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
+
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<OrderItem> OrderedItemsBakingUnitSummary_ActiveOrders = orderDao.getOrderedItemsBakingUnitSummary_ActiveOrders();
 
         model.addAttribute("OrderedItemsBakingUnitSummary_ActiveOrders", OrderedItemsBakingUnitSummary_ActiveOrders);
@@ -228,7 +266,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/OrderedItemsList_LockedOrders", method = RequestMethod.GET)
-    public String OrderedItemsList_LockedOrders(ModelMap model) {
+    public String OrderedItemsList_LockedOrders(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
+
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<OrderItem> OrderedItemsBakingUnitSummary_LockedOrders = orderDao.getOrderedItemsBakingUnitSummary_LockedOrders();
 
         model.addAttribute("OrderedItemsBakingUnitSummary_LockedOrders", OrderedItemsBakingUnitSummary_LockedOrders);
@@ -238,7 +281,12 @@ public class OrderController {
 
     @RequestMapping(value = "/OrderedItemsList_ObserverPage", method = RequestMethod.GET)
 
-    public String OrderedItemsList_ObserverPage(ModelMap model) {
+    public String OrderedItemsList_ObserverPage(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
+
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<OrderItem> OrderedItemsBakingUnitSummary_LockedOrders = orderDao.getOrderedItemsBakingUnitSummary_LockedOrders();
 
         model.addAttribute("OrderedItemsBakingUnitSummary_LockedOrders", OrderedItemsBakingUnitSummary_LockedOrders);
@@ -247,10 +295,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/ProductOrderers", method = RequestMethod.GET)
-    public String productOrderers_ActiveOrders(ModelMap model,
-            @RequestParam(value = "product_id") int product_id
-    ) {
+    public String productOrderers_ActiveOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
+        User user = (User) session.getAttribute("user");
 
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_ActiveOrders(product_id);
 
         model.addAttribute("productOrderersList", productOrderersList);
@@ -260,10 +310,12 @@ public class OrderController {
 
     @RequestMapping(value = "/ProductOrderers_LockedOrders", method = RequestMethod.GET)
 
-    public String productOrderers_LockedOrders(ModelMap model,
-            @RequestParam(value = "product_id") int product_id
-    ) {
+    public String productOrderers_LockedOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
+        User user = (User) session.getAttribute("user");
 
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_LockedOrders(product_id);
 
         model.addAttribute("productOrderersList", productOrderersList);
@@ -271,12 +323,13 @@ public class OrderController {
 
     }
 
-    
-      @RequestMapping(value = "/ProductOrderers_LockedOrders_ObserverPage", method = RequestMethod.GET)
- public String ProductOrderers_LockedOrders_ObserverPage(ModelMap model,
-            @RequestParam(value = "product_id") int product_id
-    ) {
+    @RequestMapping(value = "/ProductOrderers_LockedOrders_ObserverPage", method = RequestMethod.GET)
+    public String ProductOrderers_LockedOrders_ObserverPage(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
+        User user = (User) session.getAttribute("user");
 
+        if (user.getRole().equals("customer")) {
+            return "index";
+        }
         List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_LockedOrders(product_id);
 
         model.addAttribute("productOrderersList", productOrderersList);

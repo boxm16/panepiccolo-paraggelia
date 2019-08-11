@@ -40,11 +40,14 @@ public class UserController {
                 user.setPassword(null);
 
                 session.setAttribute("user", user);
-
+                /*
+                System.out.println("session ID at login: " + session.getId());
                 System.out.println("user from Session at login: " + session.getAttribute("user"));
+                System.out.println("session creation time at login: " + session.getCreationTime());
+
                 User user1 = (User) session.getAttribute("user");
                 System.out.println("Username1 at login:" + user1.getUsername());
-
+                 */
                 String message = "HI " + user.getUsername();
                 model.addAttribute("message", message);
                 model.addAttribute("users", user);
@@ -85,14 +88,11 @@ public class UserController {
         if (!user.getRole().equals("admin")) {
             return "index";
         }
-        System.out.println("User in AdminMainPage=" + user.getUsername());
         LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
-        //   System.out.println("customersMap size:" + customersMap.size());
         LinkedHashMap<Integer, Order> activeOrdersMap = orderDao.getActiveOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList = mixCustomer(customersMap, activeOrdersMap);
 
-        // System.out.println("ActiveOrdersMap" + activeOrdersMap.size());
         model.addAttribute("activeOrdersMap", activeOrdersMap);
         model.addAttribute("filledCustomersList", filledCustomersList);
 

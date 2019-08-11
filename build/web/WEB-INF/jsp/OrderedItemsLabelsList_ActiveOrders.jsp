@@ -34,7 +34,7 @@
                                 <th>QUANTITY</th>
                             </tr>
                         </thead>
-                        <c:forEach items="${orderedItemsLabelsList_LockedOrders}" var="current" varStatus="loop">
+                        <c:forEach items="${orderedItemsLabelsList_ActiveOrders}" var="current" varStatus="loop">
                             <tr >
                                 <td><b><c:out value="${current.label.label_description}" /></b></td>
                                 <td><b><c:out value="${current.quantity}" /></b></td>
