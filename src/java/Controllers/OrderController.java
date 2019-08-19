@@ -116,10 +116,10 @@ public class OrderController {
     @RequestMapping(value = "/ModifyOrderPage.htm", method = RequestMethod.GET)
     public String goToModifyOrderPage(ModelMap model, HttpSession session, @RequestParam(value = "order_id") int order_id) {
         User user = (User) session.getAttribute("user");
-
+/*
         if (!user.getRole().equals("admin")) {
             return "index";
-        }
+        }*/
         Order order = orderDao.getOrderByID(order_id);
         model.addAttribute("order", order);
         return "ModifyOrderPage";

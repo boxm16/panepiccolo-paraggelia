@@ -553,4 +553,69 @@ public class OrderDao {
         return order;
 
     }
+    
+    
+     public LinkedHashMap<Integer, Order> getActiveOrdersMapByUserID(int userID) {
+
+        LinkedHashMap<Integer, Order> ordersMap = new LinkedHashMap<>();
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                Statement statement = connection.createStatement();) {
+
+            String sql = "SELECT order_item.order_id, order_item.product_id, order_item.quantity, pp_order.orderer, pp_order.creation_time, pp_order.due_day, product.selling_name, product.selling_unit, product.baking_name, product.baking_unit, product.product_code\n"
+                    + " FROM order_item  \n"
+                    + "INNER JOIN pp_order on order_item.order_id=pp_order.order_id \n"
+                    + "INNER JOIN product on  order_item.product_id=product.product_id\n"
+                    + "WHERE pp_order.status='active'"
+                    + "and pp_order.orderer="+userID+";";
+
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+
+                int order_id = rs.getInt("order_id");
+                int orderer = rs.getInt("orderer");
+                String creation_date = rs.getString("creation_time");
+                String due_day = rs.getString("due_day");
+
+                int product_id = rs.getInt("product_id");
+                String selling_name = rs.getString("selling_name");
+                Double selling_unit = rs.getDouble("selling_unit");
+                String baking_name = rs.getString("baking_name");
+                Double baking_unit = rs.getDouble("baking_unit");
+                int product_code = rs.getInt("product_code");
+
+                int quantity = rs.getInt("quantity");
+
+                Product product = new Product();
+                product.setProduct_id(product_id);
+                product.setSelling_name(selling_name);
+                product.setSelling_unit(selling_unit);
+                product.setBaking_name(baking_name);
+                product.setBaking_unit(baking_unit);
+                product.setProduct_code(product_code);
+
+                OrderItem orderItem = new OrderItem();
+                orderItem.setProduct(product);
+                orderItem.setQuantity(quantity);
+                if (ordersMap.containsKey(order_id)) {
+
+                    ordersMap.get(order_id).getOrderItems().add(orderItem);
+
+                } else {
+                    Order order = new Order();
+                    order.setOrder_id(order_id);
+                    order.setOrderer(orderer);
+                    order.setCreation_time(creation_date);
+                    order.setDue_day(due_day);
+                    order.getOrderItems().add(orderItem);
+                    ordersMap.put(order_id, order);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ordersMap;
+    }
 }
