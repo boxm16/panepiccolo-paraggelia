@@ -50,7 +50,7 @@ public class UserController {
                  */
                 String message = "HI " + user.getUsername();
                 model.addAttribute("message", message);
-                model.addAttribute("users", user);
+
                 if (user.getRole().equals("admin")) {
                     return "redirect:/AdminMainPage.htm";
                 }
@@ -61,7 +61,7 @@ public class UserController {
                     return "redirect:/ObserverPage.htm";
                 }
                 if (user.getRole().equals("customer")) {
-                    return "CustomerMainPage";
+                    return "redirect:/CustomerMainPage.htm";
                 } else {
                     message = "User role not defined";
                     model.addAttribute("message", message);
@@ -106,5 +106,17 @@ public class UserController {
         }
 
         return customersMap;
+    }
+
+    @RequestMapping(value = "/CustomerMainPage.htm", method = RequestMethod.GET)
+    public String CustomerMainPage(ModelMap model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (!user.getRole().equals("customer")) {
+            return "index";
+        }
+        LinkedHashMap<Integer, Order> myActiveOrdersMap = orderDao.getActiveOrdersMapByUserID(user.getUser_id());
+        model.addAttribute("myActiveOrdersMap", myActiveOrdersMap);
+        model.addAttribute("user", user);
+        return "CustomerMainPage";
     }
 }

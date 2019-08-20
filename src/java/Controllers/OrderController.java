@@ -58,75 +58,86 @@ public class OrderController {
 
         User user = (User) session.getAttribute("user");
 
-        if (!user.getRole().equals("admin")) {
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            User customer = userDao.getUserByID(user_id);
+
+            List< FavoriteProduct> favoriteProductsList = favoriteProductsDao.getFavoriteProductsByCustomerID(user_id);
+
+            ZoneId athensZone = ZoneId.of("Europe/Athens");
+            LocalDate date = LocalDate.now(athensZone);
+
+            DayOfWeek SATURDAY = DayOfWeek.valueOf("SATURDAY");
+            if (date.getDayOfWeek() == SATURDAY) {
+                date = date.plusDays(2);
+            } else {
+                date = date.plusDays(1);
+            }
+
+            model.addAttribute("due_day1", date);
+            model.addAttribute("favoriteProductsList", favoriteProductsList);
+            model.addAttribute("customer", customer);
+
+            return "AdminOrderPage";
+        } else {
             return "index";
         }
 
-        User customer = userDao.getUserByID(user_id);
-
-        List< FavoriteProduct> favoriteProductsList = favoriteProductsDao.getFavoriteProductsByCustomerID(user_id);
-
-        ZoneId athensZone = ZoneId.of("Europe/Athens");
-        LocalDate date = LocalDate.now(athensZone);
-
-        DayOfWeek SATURDAY = DayOfWeek.valueOf("SATURDAY");
-        if (date.getDayOfWeek() == SATURDAY) {
-            date = date.plusDays(2);
-        } else {
-            date = date.plusDays(1);
-        }
-
-        model.addAttribute("due_day1", date);
-        model.addAttribute("favoriteProductsList", favoriteProductsList);
-        model.addAttribute("customer", customer);
-
-        return "AdminOrderPage";
     }
 
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
     public String saveOrder(ModelMap model, Order order, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        if (!user.getRole().equals("admin")) {
-            return "index";
-        }
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
 
-        String dateStatus = calendarDao.checkTheDate(order.getDue_day());
+            String dateStatus = calendarDao.checkTheDate(order.getDue_day());
 
-        if (!dateStatus.equals("open")) {
-            String reason = dateStatus;
-            String message = "This date is locked:" + reason + ". Try another date";
+            if (!dateStatus.equals("open")) {
+                String reason = dateStatus;
+                String message = "This date is locked:" + reason + ". Try another date";
 
-            model.addAttribute("message", message);
+                model.addAttribute("message", message);
 
-            return "ErrorPage";
-        }
-        if (orderDao.checkOrder(order)) {
+                return "ErrorPage";
+            }
+            if (orderDao.checkOrder(order)) {
 
-            String message = "There has already  been  placed some order for this day. You can modify existing order, or cancel it and place a new order";
-            model.addAttribute("message", message);
-            return "ErrorPage";
+                String message = "There has already  been  placed some order for this day. You can modify existing order, or cancel it and place a new order";
+                model.addAttribute("message", message);
+                return "ErrorPage";
+            } else {
+                orderDao.insertOrder(order);
+                if (user.getRole().equals("admin")) {
+
+                    return "redirect:/AdminMainPage.htm";
+                } else {
+
+                    return "redirect:/CustomerMainPage.htm";
+                }
+            }
         } else {
-
-            orderDao.insertOrder(order);
-            return "redirect:/AdminMainPage.htm";
+            return "index";
         }
     }
 
     @RequestMapping(value = "/ModifyOrderPage.htm", method = RequestMethod.GET)
-    public String goToModifyOrderPage(ModelMap model, HttpSession session, @RequestParam(value = "order_id") int order_id) {
+    public String goToModifyOrderPage(ModelMap model, HttpSession session,
+            @RequestParam(value = "order_id") int order_id
+    ) {
         User user = (User) session.getAttribute("user");
-
+        /*
         if (!user.getRole().equals("admin")) {
             return "index";
-        }
+        }*/
         Order order = orderDao.getOrderByID(order_id);
         model.addAttribute("order", order);
         return "ModifyOrderPage";
     }
 
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public String modifyOrder(ModelMap model, Order order, HttpSession session) {
+    public String modifyOrder(ModelMap model, Order order,
+            HttpSession session
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (!user.getRole().equals("admin")) {
@@ -138,7 +149,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
-    public String CancelOrder(ModelMap model, Order order, HttpSession session) {
+    public String CancelOrder(ModelMap model, Order order,
+            HttpSession session
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (!user.getRole().equals("admin")) {
@@ -150,7 +163,10 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogenerator.htm", method = RequestMethod.GET)
-    public String autogenerator(ModelMap model, @RequestParam(value = "user_id") int user_id, @RequestParam(value = "day") String day) {
+    public String autogenerator(ModelMap model,
+            @RequestParam(value = "user_id") int user_id,
+            @RequestParam(value = "day") String day
+    ) {
 
         User customer = userDao.getUserByID(user_id);
 
@@ -175,7 +191,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogeneratorActivation.htm", method = RequestMethod.GET)
-    public String autogeneratorActivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String autogeneratorActivation(HttpSession session, ModelMap model,
+            @RequestParam(value = "user_id") int user_id
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (!user.getRole().equals("admin")) {
@@ -192,7 +210,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogeneratorDeactivation.htm", method = RequestMethod.GET)
-    public String autogeneratorDeactivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String autogeneratorDeactivation(HttpSession session, ModelMap model,
+            @RequestParam(value = "user_id") int user_id
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (!user.getRole().equals("admin")) {
@@ -205,7 +225,8 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/LockedOrdersPage.htm", method = RequestMethod.GET)
-    public String LockedOrders(HttpSession session, ModelMap model) {
+    public String LockedOrders(HttpSession session, ModelMap model
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (user.getRole().equals("customer")) {
@@ -223,7 +244,8 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/ObserverPage.htm", method = RequestMethod.GET)
-    public String LockedOrdersObserverPage(HttpSession session, ModelMap model) {
+    public String LockedOrdersObserverPage(HttpSession session, ModelMap model
+    ) {
         User user = (User) session.getAttribute("user");
 
         if (!user.getRole().equals("observer")) {

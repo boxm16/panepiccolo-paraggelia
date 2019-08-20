@@ -135,7 +135,7 @@ public class UserDao {
                 user.setCustomer_code(customer_code);
 
             }
-       
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
