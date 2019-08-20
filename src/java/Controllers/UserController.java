@@ -116,7 +116,6 @@ public class UserController {
         }
         LinkedHashMap<Integer, Order> myActiveOrdersMap = orderDao.getActiveOrdersMapByUserID(user.getUser_id());
         model.addAttribute("myActiveOrdersMap", myActiveOrdersMap);
-       // myActiveOrdersMap.values()
         model.addAttribute("user", user);
         return "CustomerMainPage";
     }
