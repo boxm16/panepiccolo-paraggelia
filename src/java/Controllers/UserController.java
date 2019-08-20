@@ -11,6 +11,7 @@ import Models.Customer;
 import Models.CustomersRatingTable;
 import Models.Order;
 import Models.User;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +42,8 @@ public class UserController {
             return "index";
         }
         LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
-        LinkedHashMap<Integer, Order> activeOrdersMap = orderDao.getActiveOrdersMap();
-
-        LinkedHashMap<Integer, Customer> filledCustomersList = mixCustomer(customersMap, activeOrdersMap);
 
         model.addAttribute("customersMap", customersMap);
-        model.addAttribute("activeOrdersMap", activeOrdersMap);
-        model.addAttribute("filledCustomersList", filledCustomersList);
 
         return "NEW";
     }
@@ -55,14 +51,10 @@ public class UserController {
     @RequestMapping(value = "/saveCustomerRating", method = RequestMethod.POST)
 
     public String saveCustomerRating(ModelMap model, CustomersRatingTable customersRatingTable, HttpSession session) {
-       
-        for(int a=0;a<customersRatingTable.getCustomersRatingTable().size();a++){
-         //   System.out.println(customersRatingTable.getCustomersRatingTable().get(a).getUser().getOfficial_name()+
-           //         customersRatingTable.getCustomersRatingTable().get(a).getUser().getRating());
-            System.out.println(customersRatingTable.getCustomersRatingTable().get(a).getRating()+"--"+customersRatingTable.getCustomersRatingTable().get(a).getUsername());
-        }
-            return "redirect:/NEW.htm";
-      
+
+        userDao.updateUsersRating(customersRatingTable);
+        return "redirect:/NEW.htm";
+
     }
 
     @RequestMapping(value = "/loginFormHandling.htm", method = RequestMethod.POST)

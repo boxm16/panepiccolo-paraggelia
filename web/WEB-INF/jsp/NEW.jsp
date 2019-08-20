@@ -64,10 +64,10 @@
                                     <c:forEach items="${customersMap.values()}" var="cur" varStatus="loop">
 
                                         <tr>
-                                            <td class="indexInput"> <input type="number"  id="index" value="${cur.user.rating}" name="customersRatingTable[${loop.index}].rating"></td>
+                                            <td class="indexInput"> <input type="number"   value="${cur.user.rating}" name="customersRatingTable[${loop.index}].rating" readonly="readonly" style="width: 4em"></td>
                                             <td><b><c:out value="${cur.user.official_name}" /></b></td>
                                             <td><b><c:out value="${cur.user.second_name}" /></b></td>
-                                            <td > <input type="text" value="${cur.user.username}" name="customersRatingTable[${loop.index}].username"></td>
+                                            <td > <input type="text" value="${cur.user.username}" name="customersRatingTable[${loop.index}].username" readonly="readonly" style="border:none"></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
