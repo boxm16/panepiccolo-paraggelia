@@ -8,6 +8,7 @@ package Controllers;
 import DBTools.OrderDao;
 import DBTools.UserDao;
 import Models.Customer;
+import Models.CustomersRatingTable;
 import Models.Order;
 import Models.User;
 import java.util.LinkedHashMap;
@@ -31,6 +32,38 @@ public class UserController {
 
     @Autowired
     private OrderDao orderDao;
+//this is for test only
+
+    @RequestMapping(value = "/NEW.htm", method = RequestMethod.GET)
+    public String NEW(ModelMap model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+        LinkedHashMap<Integer, Order> activeOrdersMap = orderDao.getActiveOrdersMap();
+
+        LinkedHashMap<Integer, Customer> filledCustomersList = mixCustomer(customersMap, activeOrdersMap);
+
+        model.addAttribute("customersMap", customersMap);
+        model.addAttribute("activeOrdersMap", activeOrdersMap);
+        model.addAttribute("filledCustomersList", filledCustomersList);
+
+        return "NEW";
+    }
+
+    @RequestMapping(value = "/saveCustomerRating", method = RequestMethod.POST)
+
+    public String saveCustomerRating(ModelMap model, CustomersRatingTable customersRatingTable, HttpSession session) {
+       
+        for(int a=0;a<customersRatingTable.getCustomersRatingTable().size();a++){
+         //   System.out.println(customersRatingTable.getCustomersRatingTable().get(a).getUser().getOfficial_name()+
+           //         customersRatingTable.getCustomersRatingTable().get(a).getUser().getRating());
+            System.out.println(customersRatingTable.getCustomersRatingTable().get(a).getRating()+"--"+customersRatingTable.getCustomersRatingTable().get(a).getUsername());
+        }
+            return "redirect:/NEW.htm";
+      
+    }
 
     @RequestMapping(value = "/loginFormHandling.htm", method = RequestMethod.POST)
     public String login(HttpSession session, ModelMap model, @RequestParam("username") String username, @RequestParam("password") String password) {

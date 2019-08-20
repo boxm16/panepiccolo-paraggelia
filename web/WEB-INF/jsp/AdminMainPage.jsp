@@ -30,6 +30,8 @@
             <div class="col-sm">
                 <div class="table-responsive">
                     <h1>MAIN PAGE!</h1>
+                    <a  href="${pageContext.request.contextPath}/NEW.htm">NEW</a> <br>
+
                     <a  href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
                     <hr>
                     <a  href="${pageContext.request.contextPath}/LockedOrdersPage.htm">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a> <br>
