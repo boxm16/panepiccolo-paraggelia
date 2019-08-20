@@ -28,6 +28,43 @@
         <div class="container">
 
             <div class="col-sm">
+                <!--https://www.codeply.com/go/qhaBrcWp3v-->
+
+                <nav class="navbar navbar-expand-sm navbar-dark bg-primary static-top">
+                    <div class="container">
+
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Home
+                                        <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Contact</a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="" data-target="#myModal" data-toggle="modal">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+
+
+
                 <div class="table-responsive">
                     <h1>MAIN PAGE!</h1>
                     <a  href="${pageContext.request.contextPath}/NEW.htm">NEW</a> <br>
@@ -43,6 +80,19 @@
                     <a  href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
                     <hr>
                     <ul class="list-group">
+
+
+
+
+                        <div class="navbar">
+                            <a href="#home">Home</a>
+                            <a href="#news">News</a>
+                            <a href="#contact">Contact</a>
+                        </div>
+
+                        <div class="main">
+                            <p>Some text some text some text some text..</p>
+                        </div>
 
                         <c:forEach items="${filledCustomersList}" var="current" varStatus="loop">
                             <li class="list-group-item">
