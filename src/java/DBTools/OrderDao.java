@@ -211,7 +211,7 @@ public class OrderDao {
                 int product_id = rs.getInt("product_id");
                 int quantitiy = rs.getInt("quantity");
 
-                //Display values
+
                 Product product = productDao.getProductByID(product_id);
                 orderItem.setProduct(product);
                 orderItem.setQuantity(quantitiy);

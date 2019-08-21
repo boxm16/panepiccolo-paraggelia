@@ -8,8 +8,10 @@ package Controllers;
 import DBTools.OrderDao;
 import DBTools.UserDao;
 import Models.Customer;
+import Models.CustomersRatingTable;
 import Models.Order;
 import Models.User;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,29 @@ public class UserController {
 
     @Autowired
     private OrderDao orderDao;
+//this is for test only
+
+    @RequestMapping(value = "/Customers.htm", method = RequestMethod.GET)
+    public String Customers(ModelMap model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+
+        model.addAttribute("customersMap", customersMap);
+
+        return "Customers";
+    }
+
+    @RequestMapping(value = "/saveCustomerRating", method = RequestMethod.POST)
+
+    public String saveCustomerRating(ModelMap model, CustomersRatingTable customersRatingTable, HttpSession session) {
+
+        userDao.updateUsersRating(customersRatingTable);
+        return "redirect:/Customers.htm";
+
+    }
 
     @RequestMapping(value = "/loginFormHandling.htm", method = RequestMethod.POST)
     public String login(HttpSession session, ModelMap model, @RequestParam("username") String username, @RequestParam("password") String password) {

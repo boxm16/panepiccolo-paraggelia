@@ -26,74 +26,104 @@
     <body>
 
         <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <!--https://www.codeply.com/go/qhaBrcWp3v-->
 
-            <div class="col-sm">
-                <div class="table-responsive">
-                    <h1>MAIN PAGE!</h1>
-                    <a  href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
-                    <hr>
-                    <a  href="${pageContext.request.contextPath}/LockedOrdersPage.htm">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a> <br>
-                    23:00, ΠΑΡΑΓΓΕΛΙΕΣ ΠΟΥ ΕΙΝΑΙ ΝΑ ΠΑΡΑΔΟΘΟΥΝ ΤΗΝ ΕΠΟΜΕΝΗ ΜΕΡΑ, ΚΛΕΙΔΩΝΟΥΝ. ΔΕΝ ΥΠΑΡΧΕΙ ΔΥΝΑΤΟΤΗΤΑ ΑΛΛΑΓΗΣ (Η ΑΚΥΡΩΣΗΣ) ΠΑΡΑΓΓΕΛΙΑΣ ΜΕΣΩ ΣΥΣΤΗΜΑΤΟΣ. ΜΟΝΟ ΤΗΛΕΦΩΝΙΚΑ<br>
-                    <a  href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
+                    <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
+                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+                            <ul class="navbar-nav w-100 justify-content-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                                <li class="nav-item">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
-                    <hr>
-                    <a  href="${pageContext.request.contextPath}/LabelsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
-                    <a  href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
-                    <hr>
-                    <ul class="list-group">
 
-                        <c:forEach items="${filledCustomersList}" var="current" varStatus="loop">
-                            <li class="list-group-item">
-                                <div>
-                                    <table id="customerTable" class="table-hover " border="5" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <td width="80%"><h2 style="color:red;"><b><c:out value="${current.value.user.rating})${current.value.user.official_name}" /></b></h2></td>
+                    <nav class="nav flex-column nav-pills" style="background:lightskyblue;" >
+                        <a class="nav-link " href="${pageContext.request.contextPath}/LockedOrdersPage.htm"">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <a class="nav-link " href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> 
+                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
+                    </nav>
 
-                                                <td width="20%"><h2><b><c:out value="${current.value.user.second_name}" /></b></h2>  </td>
-                                            </tr>
-                                        </thead>
-                                        <c:forEach items="${current.value.ordersList}" var="cur" varStatus="loop">
+                    <div class="table-responsive">
 
-                                            <tr bgcolor="fuchsia" >
+                        <hr>
+
+                        23:00, ΠΑΡΑΓΓΕΛΙΕΣ ΠΟΥ ΕΙΝΑΙ ΝΑ ΠΑΡΑΔΟΘΟΥΝ ΤΗΝ ΕΠΟΜΕΝΗ ΜΕΡΑ, ΚΛΕΙΔΩΝΟΥΝ. ΔΕΝ ΥΠΑΡΧΕΙ ΔΥΝΑΤΟΤΗΤΑ ΑΛΛΑΓΗΣ (Η ΑΚΥΡΩΣΗΣ) ΠΑΡΑΓΓΕΛΙΑΣ ΜΕΣΩ ΣΥΣΤΗΜΑΤΟΣ. ΜΟΝΟ ΤΗΛΕΦΩΝΙΚΑ<br>
+                        <hr>
+                        <ul class="list-group">
+
+                            <c:forEach items="${filledCustomersList}" var="current" varStatus="loop">
+                                <li class="list-group-item">
+                                    <div>
+                                        <table id="customerTable" class="table-hover " border="5" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td width="80%"><h2 style="color:red;"><b><c:out value="${current.value.user.rating})${current.value.user.official_name}" /></b></h2></td>
+
+                                                    <td width="20%"><h2><b><c:out value="${current.value.user.second_name}" /></b></h2>  </td>
+                                                </tr>
+                                            </thead>
+                                            <c:forEach items="${current.value.ordersList}" var="cur" varStatus="loop">
+
+                                                <tr bgcolor="fuchsia" >
 
                                            <!-- <c:out value="${cur.creation_time}" />/ -->
-                                                <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
-                                                <td> Order Number:<c:out value="${cur.order_id}" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td >
-                                                    <table id="orderTable"    class="table-bordered table-hover ">
+                                                    <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
+                                                    <td> Order Number:<c:out value="${cur.order_id}" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td >
+                                                        <table id="orderTable"    class="table-bordered table-hover ">
 
-                                                        <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
-                                                            <tr class = "active" bgcolor="lime" >
-                                                               <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
-                                                                <td><b><c:out value="${curr.product.selling_name}" /></b></td>
-                                                                <td><b><c:out value="${curr.quantity}" /></b></td>
+                                                            <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
+                                                                <tr class = "active" bgcolor="lime" >
+                                                                   <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
+                                                                    <td><b><c:out value="${curr.product.selling_name}" /></b></td>
+                                                                    <td><b><c:out value="${curr.quantity}" /></b></td>
 
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </table>
-                                                </td>
-                                                <td> <button id="modifyButton"  class="btn btn-warning btn-sm btn-block"   onclick="location.href = '${pageContext.request.contextPath}/ModifyOrderPage.htm?order_id=${cur.order_id}'">ΔΙΟΡΘΩΣΗ ΠΑΡΑΓΓΕΛΙΑΣ</button></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </table>
+                                                    </td>
+                                                    <td> <button id="modifyButton"  class="btn btn-warning btn-sm btn-block"   onclick="location.href = '${pageContext.request.contextPath}/ModifyOrderPage.htm?order_id=${cur.order_id}'">ΔΙΟΡΘΩΣΗ ΠΑΡΑΓΓΕΛΙΑΣ</button></td>
 
-                                            </tr>
-                                        </c:forEach>
-                                        <tfoot>
-                                            <tr>
-                                                <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/AdminOrderPage.htm?user_id=${current.key}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
-                                                <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${current.key}'">ΡΥΘΜΙΣΕΙΣ ΠΕΛΑΤΗ</button></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                                </tr>
+                                            </c:forEach>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/AdminOrderPage.htm?user_id=${current.key}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
+                                                    <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${current.key}'">ΡΥΘΜΙΣΕΙΣ ΠΕΛΑΤΗ</button></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
 
 
-                            </li>
-                        </c:forEach>
+                                </li>
+                            </c:forEach>
 
-                    </ul>
-                    <hr>
+                        </ul>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>

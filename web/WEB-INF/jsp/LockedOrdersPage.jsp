@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>MAIN PAGE</title>
+        <title>LOCKED ORDERS</title>
 
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,70 +26,114 @@
     <body>
 
         <div class="container">
-
-            <div class="col-sm">
-                <div class="table-responsive">
-                    <h1>LOCKED ORDERS!</h1>
-                    <a href="${pageContext.request.contextPath}/AdminMainPage.htm">GO HOME</a> <br>
-                    <hr>
-
-                    <ul class="list-group">
-
-                        <c:forEach items="${filledCustomersList_LockedOrders}" var="current" varStatus="loop">
-                            <li >
+            <div class="row">
+                <div class="col-sm">
 
 
+                    <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
+                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+                            <ul class="navbar-nav w-100 justify-content-center">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="//codeply.com">ΠΡΟΪΟΝΤΑ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Link</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Right</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Right</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Right</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
 
-                                <table id="customerTable" class="table-hover" border="5">
-                                    <thead>
-                                        <tr>
-                                            <td  ><h3 style="color:red;"><b><c:out value="${current.key})${current.value.user.official_name}" /></b></h3></td>
+                    <nav class="nav flex-column nav-pills" style="background:lightskyblue;" >
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/LockedOrdersPage.htm"">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <a class="nav-link " href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> 
+                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
+                    </nav>
 
-                                            <td><h3><b><c:out value="${current.value.user.second_name}" /></b></h3>  </td>
-                                        </tr>
-                                    </thead>
-                                    <c:forEach items="${current.value.ordersList}" var="cur" varStatus="loop">
 
-                                        <tr bgcolor="green">
+                    <div class="table-responsive">
+                        <h1>LOCKED ORDERS!</h1>
+                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm">GO HOME</a> <br>
+                        <hr>
+
+                        <ul class="list-group">
+
+                            <c:forEach items="${filledCustomersList_LockedOrders}" var="current" varStatus="loop">
+                                <li >
+
+
+
+
+                                    <table id="customerTable" class="table-hover" border="5">
+                                        <thead>
+                                            <tr>
+                                                <td  ><h3 style="color:red;"><b><c:out value="${current.key})${current.value.user.official_name}" /></b></h3></td>
+
+                                                <td><h3><b><c:out value="${current.value.user.second_name}" /></b></h3>  </td>
+                                            </tr>
+                                        </thead>
+                                        <c:forEach items="${current.value.ordersList}" var="cur" varStatus="loop">
+
+                                            <tr bgcolor="green">
 
                                            <!-- <c:out value="${cur.creation_time}" />/ -->
-                                            <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
-                                            <td> Order Number:<c:out value="${cur.order_id}" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table id="orderTable"    class="table-bordered table-hover ">
+                                                <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
+                                                <td> Order Number:<c:out value="${cur.order_id}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table id="orderTable"    class="table-bordered table-hover ">
 
-                                                    <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
-                                                        <tr class = "active">
-                                                           <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
-                                                            <td><b><c:out value="${curr.product.selling_name}" /></b></td>
-                                                            <td><b><c:out value="${curr.quantity}" /></b></td>
+                                                        <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
+                                                            <tr class = "active">
+                                                               <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
+                                                                <td><b><c:out value="${curr.product.selling_name}" /></b></td>
+                                                                <td><b><c:out value="${curr.quantity}" /></b></td>
 
-                                                        </tr>
-                                                    </c:forEach>
-                                                </table>
-                                            </td>
-                                            <td> </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </table>
+                                                </td>
+                                                <td> </td>
 
-                                        </tr>
-                                    </c:forEach>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                            </tr>
+                                        </c:forEach>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
 
 
 
-                            </li>
-                        </c:forEach>
+                                </li>
+                            </c:forEach>
 
-                    </ul>
-                    <hr>
+                        </ul>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>

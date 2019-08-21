@@ -6,8 +6,10 @@
 package DBTools;
 
 import Models.Customer;
+import Models.CustomersRatingTable;
 import Models.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -65,7 +67,7 @@ public class UserDao {
 
         try (Connection connection = DataBaseConnection.getInitConnection(); Statement statement = connection.createStatement()) {
 
-            String SQL = "SELECT * FROM user WHERE role='customer'";
+            String SQL = "SELECT * FROM user WHERE role='customer' ORDER BY rating  ";
 
             ResultSet rs = statement.executeQuery(SQL);
 
@@ -142,5 +144,22 @@ public class UserDao {
 
         return user;
 
+    }
+
+    public void updateUsersRating(CustomersRatingTable customersRatingTable) {
+        String updateUsersRatingSQL = "UPDATE user SET rating=? WHERE username=?";
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement insertOrderItemsPrepStatement = connection.prepareStatement(updateUsersRatingSQL)) {
+            for (int a = 0; a < customersRatingTable.getCustomersRatingTable().size(); a++) {
+                //OO,this is bad, realy bad, really really bad
+                insertOrderItemsPrepStatement.setInt(1, customersRatingTable.getCustomersRatingTable().get(a).getRating());
+                insertOrderItemsPrepStatement.setString(2, customersRatingTable.getCustomersRatingTable().get(a).getUsername());
+                insertOrderItemsPrepStatement.addBatch();
+            }
+            insertOrderItemsPrepStatement.executeBatch();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
