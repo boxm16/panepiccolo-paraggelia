@@ -35,8 +35,8 @@ public class UserController {
     private OrderDao orderDao;
 //this is for test only
 
-    @RequestMapping(value = "/NEW.htm", method = RequestMethod.GET)
-    public String NEW(ModelMap model, HttpSession session) {
+    @RequestMapping(value = "/Customers.htm", method = RequestMethod.GET)
+    public String Customers(ModelMap model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (!user.getRole().equals("admin")) {
             return "index";
@@ -45,7 +45,7 @@ public class UserController {
 
         model.addAttribute("customersMap", customersMap);
 
-        return "NEW";
+        return "Customers";
     }
 
     @RequestMapping(value = "/saveCustomerRating", method = RequestMethod.POST)
@@ -53,7 +53,7 @@ public class UserController {
     public String saveCustomerRating(ModelMap model, CustomersRatingTable customersRatingTable, HttpSession session) {
 
         userDao.updateUsersRating(customersRatingTable);
-        return "redirect:/NEW.htm";
+        return "redirect:/Customers.htm";
 
     }
 
