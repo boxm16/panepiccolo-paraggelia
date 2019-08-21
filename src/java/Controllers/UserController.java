@@ -144,4 +144,25 @@ public class UserController {
         model.addAttribute("user", user);
         return "CustomerMainPage";
     }
+
+    @RequestMapping(value = "/Logout.htm", method = RequestMethod.GET)
+    public String Logout(HttpSession session) {
+
+        session.invalidate();
+
+        return "index";
+
+    }
+
+    @RequestMapping(value = "createNewUser.htm", method = RequestMethod.GET)
+    public String createNewUser(HttpSession session, ModelMap model) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+        User user = new User();
+        model.addAttribute(user);
+        return "CreateNewUser";
+
+    }
 }

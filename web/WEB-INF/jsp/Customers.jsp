@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Order Page</title>
+
+
         <style>
             td:hover{
                 cursor:move;
@@ -20,6 +22,7 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
     </head>
     <body>
         <div class="container">
@@ -27,10 +30,7 @@
                 <div class="col-sm">
 
 
-
-
-
-                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
+                    <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
                         <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                             <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,7 @@
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                             <ul class="navbar-nav w-100 justify-content-center">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
+                                    <a class="nav-link active" href="${pageContext.request.contextPath}/Customers.htm"><b>ΠΕΛΑΤΕΣ</b></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
@@ -46,7 +46,7 @@
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
-                                
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
@@ -54,57 +54,53 @@
                         </div>
                     </nav>
 
+                    <nav class="navbar navbar-light bg-light">
+
+                        <button type="button" class="btn btn-outline-success"  onclick="location.href = '${pageContext.request.contextPath}/createNewUser.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ ΠΕΛΑΤΗ</button>
 
 
-                    <div class="form-group">
-                        <form:form action="${pageContext.request.contextPath}/saveCustomerRating.htm" method="POST" modelAttribute="customersRatingTable"  >
-                            <table class="table table-hover" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">RATING</th>
-                                        <th scope="col">OFFICIAL NAME</th>
-                                        <th scope="col">SECOND NAME</th>
-                                        <th scope="col">USERNAME</th>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        </form>
+                    </nav>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <div class="container">
 
-                                    <!-- <tr id="1" >
-                                         <td class="index">1</td>
-                                         <td class="indexInput"><input type="text" name="abc" id="index" value="1"></td>
-                                         <td>Mark</td>
-                                         <td>Otto</td>
-                                         <td>@mdo</td>
-                                     </tr>
-                                     <tr id="2">
-                                         <td class="index">2</td>
-                                         <td class="indexInput"><input type="text" name="abc" id="index" value="2"></td>
-                                         <td>Jacob</td>
-                                         <td>Thornton</td>
-                                         <td>@fat</td>
-                                     </tr>
-                                     <tr id="3">
-                                         <td class="index">3</td>
-                                         <td class="indexInput"><input type="text" name="abc" id="index" value="3"></td>
-                                         <td>Larry</td>
-                                         <td>the Bird</td>
-                                         <td>@twitter</td>
-                                     </tr>
-                                    -->
-                                    <c:forEach items="${customersMap.values()}" var="cur" varStatus="loop">
-
+                        <div class="form-group">
+                            <form:form action="${pageContext.request.contextPath}/saveCustomerRating.htm" method="POST" modelAttribute="customersRatingTable"  >
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
                                         <tr>
-                                            <td class="indexInput"> <input type="number"   value="${cur.user.rating}" name="customersRatingTable[${loop.index}].rating" readonly="readonly" style="width: 4em"></td>
-                                            <td><b><c:out value="${cur.user.official_name}" /></b></td>
-                                            <td><b><c:out value="${cur.user.second_name}" /></b></td>
-                                            <td > <input type="text" value="${cur.user.username}" name="customersRatingTable[${loop.index}].username" readonly="readonly" style="border:none"></td>
+                                            <th scope="col" class="text-center">RATING</th>
+                                            <th scope="col">OFFICIAL NAME</th>
+                                            <th scope="col">SECOND NAME</th>
+                                            <th scope="col">USERNAME</th>
+                                            <th scope="col">  <button type="submit" class="btn btn-sm btn-primary">ΑΠΟΘΗΚΕΥΣΗ ΑΛΛΑΓΗΣ<br> ΣΤΟ RATING</button>
+                                            </th>
+                                            <th scope="col"></th>
+
                                         </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                            <button type="submit" class="btn btn-primary">ΑΠΟΘΗΚΕΥΣΗ ΑΛΛΑΓΗΣ</button>
-                        </form:form>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${customersMap.values()}" var="cur" varStatus="loop">
+
+                                            <tr>
+                                                <td class="indexInput"> <input type="number"   value="${cur.user.rating}" name="customersRatingTable[${loop.index}].rating" readonly="readonly" style="width: 3em; border:none;"></td>
+                                                <td><b><c:out value="${cur.user.official_name}" /></b></td>
+                                                <td><b><c:out value="${cur.user.second_name}" /></b></td>
+                                                <td > <input type="text" value="${cur.user.username}" name="customersRatingTable[${loop.index}].username" readonly="readonly" style="border:none"></td>
+
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-warning"  onclick="location.href = '${pageContext.request.contextPath}/editUser.htm?user_id=${cur.user.user_id}'" >ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ</button>
+                                                    <hr>
+                                                    <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deleteUser.htm?user_id=${cur.user.user_id}'" >ΔΙΑΓΡΑΦΗ ΠΕΛΑΤΗ</button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </form:form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,6 +138,10 @@
             });
 
         </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 
     </body>
 </html>
