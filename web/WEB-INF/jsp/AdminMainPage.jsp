@@ -37,25 +37,18 @@
                         </button>
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                             <ul class="navbar-nav w-100 justify-content-center">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="//codeply.com">ΠΡΟΪΟΝΤΑ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
-                                </li>
+                                
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
                             </ul>
                         </div>

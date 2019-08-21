@@ -88,4 +88,11 @@ public class ProductControler {
         return "redirect:/FavoritProductsList.htm?user_id=" + user_id;
 
     }
+
+    @RequestMapping(value = "/Products.htm", method = RequestMethod.GET)
+    public String Products() {
+
+        return "Products";
+
+    }
 }
