@@ -11,12 +11,14 @@ import Models.Customer;
 import Models.CustomersRatingTable;
 import Models.Order;
 import Models.User;
+import Validation.UserValidator;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +35,11 @@ public class UserController {
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private UserValidator userValidator;
+    
+    
 //this is for test only
 
     @RequestMapping(value = "/Customers.htm", method = RequestMethod.GET)
@@ -165,20 +172,21 @@ public class UserController {
         return "CreateNewUser";
 
     }
-    
+
     @RequestMapping(value = "createNewUserHandling.htm", method = RequestMethod.POST)
-    public String createNewUserHandling(HttpSession session, ModelMap model) {
+    public String createNewUserHandling(ModelMap model, User user, BindingResult bindingResult, HttpSession session) {
         User sessionUser = (User) session.getAttribute("user");
         if (!sessionUser.getRole().equals("admin")) {
             return "index";
         }
-       
-        
-        
-        
-        
-        
-        return "CreateNewUser";
+
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/createNewUser.htm";
+        }
+        System.out.println("goood");
+
+        return "redirect:/Customers.htm";
 
     }
 
