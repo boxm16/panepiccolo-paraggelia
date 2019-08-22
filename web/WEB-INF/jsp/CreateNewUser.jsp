@@ -49,7 +49,7 @@
                     </nav>
 
 
-                    <spring:form modelAttribute="user" cssClass="login-form" action="${pageContext.request.contextPath}/registerFormHandling.htm" method="POST">  
+                    <spring:form modelAttribute="user" cssClass="login-form" action="${pageContext.request.contextPath}/createNewUserHandling.htm" method="POST">  
                         <div class="col-md-4 login-sec">
                             <h4 class="text-center">ΠΡΟΣΘΕΣΕ ΚΑΙΝΟΥΡΓΙΟ ΠΕΛΑΤΗ</h4>
                             <div class="form-group">

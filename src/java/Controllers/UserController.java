@@ -165,4 +165,21 @@ public class UserController {
         return "CreateNewUser";
 
     }
+    
+    @RequestMapping(value = "createNewUserHandling.htm", method = RequestMethod.POST)
+    public String createNewUserHandling(HttpSession session, ModelMap model) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+       
+        
+        
+        
+        
+        
+        return "CreateNewUser";
+
+    }
+
 }
