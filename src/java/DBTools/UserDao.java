@@ -162,4 +162,52 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void inserUser(User user) {
+        String inserUserSQL = "INSERT INTO user (official_name, second_name, username, password, role, rating, status, customer_code) VALUES(?,?,?,?,?,?,?,?)";
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement insertUser = connection.prepareStatement(inserUserSQL)) {
+            int maxRating;
+            try (Statement statement = connection.createStatement()) {
+                String SQL = "SELECT MAX(rating) AS MAX_R FROM user";
+                ResultSet rs = statement.executeQuery(SQL);
+                maxRating = 0;
+                while (rs.next()) {
+                    maxRating = rs.getInt("MAX_R") + 1;
+                }
+                rs.close();
+            }
+
+            insertUser.setString(1, user.getOfficial_name());
+            insertUser.setString(2, user.getSecond_name());
+            insertUser.setString(3, user.getUsername());
+            insertUser.setString(4, user.getPassword());
+            insertUser.setString(5, "customer");
+            insertUser.setInt(6, maxRating);
+            insertUser.setString(7, "active");
+            insertUser.setInt(8, 0);
+            insertUser.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteUserByUserID(int user_id) {
+        String deleteUserSQL = "DELETE FROM user WHERE user_id=?";
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement deleteUser = connection.prepareStatement(deleteUserSQL);) {
+
+            deleteUser.setInt(1, user_id);
+
+            deleteUser.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

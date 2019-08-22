@@ -38,10 +38,8 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
-    
-    
-//this is for test only
 
+//this is for test only
     @RequestMapping(value = "/Customers.htm", method = RequestMethod.GET)
     public String Customers(ModelMap model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -182,12 +180,28 @@ public class UserController {
 
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "redirect:/createNewUser.htm";
+
+            System.out.println(bindingResult.getAllErrors().toString());
+
+            return "CreateNewUser";
         }
-        System.out.println("goood");
+
+        userDao.inserUser(user);
 
         return "redirect:/Customers.htm";
 
+    }
+
+    @RequestMapping(value = "/deleteUser.htm", method = RequestMethod.GET)
+    public String dispalyOrder(HttpSession session, @RequestParam(value = "user_id") int user_id) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+
+        userDao.deleteUserByUserID(user_id);
+
+        return "redirect:/Customers.htm";
     }
 
 }

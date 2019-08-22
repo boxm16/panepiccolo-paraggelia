@@ -24,25 +24,25 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> type) {
-         return User.class.equals(type);
-   }
+        return User.class.equals(type);
+    }
 
     @Override
     public void validate(Object o, Errors errors) {
-        User u = (User) o;
-        String username = u.getUsername().trim();
+        User newUser = (User) o;
+        String username = newUser.getUsername().trim();
 
-        if (userDao.checkUserByUsername(username) != null) {
+        User user = userDao.checkUserByUsername(username);
+
+        if (user.getUsername() != null) {
             errors.rejectValue("username", "username.Exists");
         }
 
-        String password = u.getPassword();
-        if (password.length() < 4) {
-            errors.rejectValue("password", "pwd.Short");
+        if (newUser.getUsername().length()>15) {
+            errors.rejectValue("username", "username.TooLong");
         }
-        
 
-        char[] chars = u.getUsername().toCharArray();
+        char[] chars = newUser.getUsername().toCharArray();
         for (char ch : chars) {
 
             if (Character.isWhitespace(ch)) {
@@ -52,10 +52,6 @@ public class UserValidator implements Validator {
             if (ch == '\\') {
                 errors.rejectValue("username", "username.SpecChar1");
             }
-           
-
         }
-
     }
-
 }
