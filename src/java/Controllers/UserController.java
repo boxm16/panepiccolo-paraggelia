@@ -129,7 +129,7 @@ public class UserController {
         if (!user.getRole().equals("admin")) {
             return "index";
         }
-        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getActiveCustomers();
         LinkedHashMap<Integer, Order> activeOrdersMap = orderDao.getActiveOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList = mixCustomer(customersMap, activeOrdersMap);

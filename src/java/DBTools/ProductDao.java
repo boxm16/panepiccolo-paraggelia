@@ -7,6 +7,7 @@ package DBTools;
 
 import Models.Product;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,14 +24,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductDao {
 
-    public List<Product> displayProducts() {
+    public ArrayList<Product> displayProducts() {
 
-        List<Product> productsBag = new ArrayList<>();
+        ArrayList<Product> productsBag = new ArrayList<>();
 
         try (Connection connection = DataBaseConnection.getInitConnection();
                 Statement statement = connection.createStatement();) {
 
-            String sql_ordered = "SELECT * FROM product ORDER BY selling_name ASC";
+            String sql_ordered = "SELECT * FROM product WHERE status='active' ORDER BY selling_name ASC";
 
             ResultSet rs = statement.executeQuery(sql_ordered);
 
@@ -94,6 +95,26 @@ public class ProductDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return product;
+    }
+
+    public void deleteProductByProductID(int product_id) {
+
+        String deactivateUserSQL = "UPDATE product SET status='deleted' WHERE product_id=?";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement deleteProduct = connection.prepareStatement(deactivateUserSQL);) {
+
+            deleteProduct.setInt(1, product_id);
+
+            deleteProduct.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void insertNewProduct(Product product) {
+        System.out.println("Still to be done");
     }
 
 }

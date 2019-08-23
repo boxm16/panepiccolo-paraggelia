@@ -15,7 +15,9 @@ import Models.Label;
 import Models.Product;
 import Models.TemplateItem;
 import Models.User;
+import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -90,9 +92,35 @@ public class ProductControler {
     }
 
     @RequestMapping(value = "/Products.htm", method = RequestMethod.GET)
-    public String Products() {
+    public String products(ModelMap model, HttpSession session) {
+        ArrayList<Product> producs = productDao.displayProducts();
 
+        model.addAttribute("products", producs);
         return "Products";
+
+    }
+
+    @RequestMapping(value = "/deleteProduct.htm", method = RequestMethod.GET)
+    public String deleteProduct(HttpSession session, @RequestParam(value = "product_id") int product_id) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+        productDao.deleteProductByProductID(0);
+
+        return "redirect:/Products";
+
+    }
+    
+      @RequestMapping(value = "/createNewProduct.htm", method = RequestMethod.POST)
+    public String createNewProductt(HttpSession session, Product product) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+      productDao.insertNewProduct(product);
+
+        return "redirect:/Products";
 
     }
 }

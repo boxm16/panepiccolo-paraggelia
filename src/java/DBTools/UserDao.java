@@ -61,6 +61,50 @@ public class UserDao {
         }
         return user;
     }
+    
+     public LinkedHashMap<Integer, Customer> getActiveCustomers() {
+        LinkedHashMap<Integer, Customer> customersMap = new LinkedHashMap<>();
+
+        try (Connection connection = DataBaseConnection.getInitConnection(); Statement statement = connection.createStatement()) {
+
+            String SQL = "SELECT * FROM user WHERE role='customer' and status='active' ORDER BY rating  ";
+
+            ResultSet rs = statement.executeQuery(SQL);
+
+            while (rs.next()) {
+
+                int user_id = rs.getInt("user_id");
+                String official_name = rs.getString("official_name");
+                String second_name = rs.getString("second_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                String status = rs.getString("status");
+                int rating = rs.getInt("rating");
+                int customer_code = rs.getInt("customer_code");
+
+                User user = new User();
+                user.setUser_id(user_id);
+                user.setOfficial_name(official_name);
+                user.setSecond_name(second_name);
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setRole(role);
+                user.setStatus(status);
+                user.setRating(rating);
+                user.setCustomer_code(customer_code);
+
+                Customer customer = new Customer();
+                customer.setUser(user);
+                customersMap.put(user_id, customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customersMap;
+
+    }
 
     public LinkedHashMap<Integer, Customer> getCustomers() {
         LinkedHashMap<Integer, Customer> customersMap = new LinkedHashMap<>();
@@ -195,7 +239,7 @@ public class UserDao {
     }
 
     public void deactivateUserByUserID(int user_id) {
-        //  String deleteUserSQL = "DELETE FROM user WHERE user_id=?";
+
         String deactivateUserSQL = "UPDATE user SET status='deactivated', rating='0' WHERE user_id=?";
         try (Connection connection = DataBaseConnection.getInitConnection();
                 PreparedStatement deactivateUser = connection.prepareStatement(deactivateUserSQL);) {

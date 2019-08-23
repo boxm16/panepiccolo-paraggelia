@@ -1,8 +1,3 @@
-<%-- 
-    Document   : MAIN
-    Created on : Apr 7, 2019, 4:44:32 AM
-    Author     : boxm1
---%>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -15,20 +10,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>MAIN PAGE</title>
+        <title>ΠΡΟΙΟΝΤΑ</title>
 
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
 
 
+        </style>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 
     </head>
     <body>
-
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <!--https://www.codeply.com/go/qhaBrcWp3v-->
+
 
                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
                         <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
@@ -38,9 +37,9 @@
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                             <ul class="navbar-nav w-100 justify-content-center">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
+                                    <a class="nav-link active" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm"><b>ΠΡΟΪΟΝΤΑ</b></a>
                                 </li>
                             </ul>
@@ -54,9 +53,57 @@
                         </div>
                     </nav>
 
+                    <nav class="navbar navbar-light bg-light">
+
+                        <button type="button" class="btn btn-outline-primary"  onclick="location.href = '${pageContext.request.contextPath}/createNewProduct.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ ΠΡΟΪΟΝΤΟΣ</button>
+
+
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        </form>
+                    </nav>
+
+                    <div class="container">
+
+                        <table class="table table-hover" id="myTable">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">SELLING NAME</th>
+                                    <th scope="col">BAKING NAME</th>
+                                    <th scope="col">SELLING UNIT</th>
+                                    <th scope="col">BAKING UNIT</th>
+
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${products}" var="cur" >
+
+                                    <tr >
+                                        <td><b><c:out value="${cur.selling_name}" /></b></td>
+                                        <td><b><c:out value="${cur.baking_name}" /></b></td>
+                                        <td><b><c:out value="${cur.selling_unit}" /></b></td>
+                                        <td><b><c:out value="${cur.baking_unit}" /></b></td>
+
+                                        <td>
+
+                                            <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deleteProduct.htm?user_id=${cur.product_id}'" >ΔΙΑΓΡΑΦΗ ΠΡΟΙΝΟΝΤΟΣ</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+
+                        <hr>
+
+
+                    </div>
                 </div>
             </div>
         </div>
+
         <script>
 
 
@@ -64,5 +111,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
     </body>
 </html>
