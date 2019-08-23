@@ -17,6 +17,7 @@ public class Product {
     private String baking_name;
     private Double baking_unit;
     private int product_code;
+    private String status;
 
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
@@ -66,4 +67,13 @@ public class Product {
         return product_code;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    
 }

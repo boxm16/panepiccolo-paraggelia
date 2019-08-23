@@ -46,7 +46,7 @@
                         </div>
                     </nav>          
 
-                    <p>SELECT A PRODUCT FROM EXISTING LIST OR <a href="${pageContext.request.contextPath}/AddNewProduct.htm">Create New PRODUCT</a></p>
+                    <p>SELECT A PRODUCT FROM EXISTING LIST OR <a href="${pageContext.request.contextPath}/createNewProduct.htm">Create New PRODUCT</a></p>
                     <br>
 
                     <select id="product" name="product" onChange="selectProduct()" >
