@@ -46,10 +46,21 @@ public class UserController {
         if (!user.getRole().equals("admin")) {
             return "index";
         }
-        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();//no need for Map, change later for ArrayList
+        ArrayList<Customer> activeCustomers = new ArrayList<>();
+        ArrayList<Customer> deactivatedCustomers = new ArrayList<>();
+        for (Customer customer : customersMap.values()) {
+            if (customer.getUser().getStatus().equals("active")) {
+                activeCustomers.add(customer);
+            }
+            if (customer.getUser().getStatus().equals("deactivated")) {
+                deactivatedCustomers.add(customer);
+            }
 
-        model.addAttribute("customersMap", customersMap);
+        }
 
+        model.addAttribute("activeCustomers", activeCustomers);
+        model.addAttribute("deactivatedCustomers", deactivatedCustomers);
         return "Customers";
     }
 
@@ -181,27 +192,67 @@ public class UserController {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
 
-            System.out.println(bindingResult.getAllErrors().toString());
-
             return "CreateNewUser";
+        } else {
+
+            userDao.inserUser(user);
+
+            return "redirect:/Customers.htm";
         }
-
-        userDao.inserUser(user);
-
-        return "redirect:/Customers.htm";
-
     }
 
-    @RequestMapping(value = "/deleteUser.htm", method = RequestMethod.GET)
-    public String dispalyOrder(HttpSession session, @RequestParam(value = "user_id") int user_id) {
+    @RequestMapping(value = "/deactivateUser.htm", method = RequestMethod.GET)
+    public String deactivateUser(HttpSession session, @RequestParam(value = "user_id") int user_id) {
         User sessionUser = (User) session.getAttribute("user");
         if (!sessionUser.getRole().equals("admin")) {
             return "index";
         }
 
-        userDao.deleteUserByUserID(user_id);
+        userDao.deactivateUserByUserID(user_id);
 
         return "redirect:/Customers.htm";
     }
 
+    @RequestMapping(value = "/reactivateUser.htm", method = RequestMethod.GET)
+    public String reactivateUser(HttpSession session, @RequestParam(value = "user_id") int user_id) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+
+        userDao.reactivateUserByUserID(user_id);
+
+        return "redirect:/Customers.htm";
+    }
+
+    @RequestMapping(value = "/editCustomer.htm", method = RequestMethod.GET)
+    public String editUser(HttpSession session, @RequestParam(value = "user_id") int user_id, ModelMap model) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+
+        User userCustomer = userDao.getUserByID(user_id);
+        model.addAttribute("userCustomer", userCustomer);
+        return "EditCustomer";
+    }
+
+    @RequestMapping(value = "/editCustomerHandling.htm", method = RequestMethod.POST)
+    public String editCustomerHandling(HttpSession session, User userCustomer, BindingResult bindingResult, ModelMap model) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+
+        userValidator.validate(userCustomer, bindingResult);
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("userCustomer", userCustomer);
+            return "EditCustomer";
+        } else {
+            userDao.updateUserCustomer(userCustomer);
+
+            return "redirect:/Customers.htm";
+        }
+    }
 }

@@ -17,6 +17,7 @@
             td:hover{
                 cursor:move;
             }
+
         </style>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -82,25 +83,57 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${customersMap.values()}" var="cur" varStatus="loop">
+                                        <c:forEach items="${activeCustomers}" var="cur" varStatus="loop">
 
-                                            <tr>
+                                            <tr >
                                                 <td class="indexInput"> <input type="number"   value="${cur.user.rating}" name="customersRatingTable[${loop.index}].rating" readonly="readonly" style="width: 3em; border:none;"></td>
                                                 <td><b><c:out value="${cur.user.official_name}" /></b></td>
                                                 <td><b><c:out value="${cur.user.second_name}" /></b></td>
                                                 <td > <input type="text" value="${cur.user.username}" name="customersRatingTable[${loop.index}].username" readonly="readonly" style="border:none"></td>
 
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-warning"  onclick="location.href = '${pageContext.request.contextPath}/editUser.htm?user_id=${cur.user.user_id}'" >ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ</button>
+                                                    <button type="button" class="btn btn-sm btn-warning"  onclick="location.href = '${pageContext.request.contextPath}/editCustomer.htm?user_id=${cur.user.user_id}'" >ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ ΠΕΛΑΤΗ</button>
                                                     <hr>
-                                                    <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deleteUser.htm?user_id=${cur.user.user_id}'" >ΔΙΑΓΡΑΦΗ ΠΕΛΑΤΗ</button>
+                                                    <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deactivateUser.htm?user_id=${cur.user.user_id}'" >ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΠΕΛΑΤΗ</button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </form:form>
+
                         </div>
+                        <hr>
+                        <h3>ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟΙ ΠΕΛΑΤΕΣ</h3>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" >RATING</th>
+                                    <th scope="col">OFFICIAL NAME</th>
+                                    <th scope="col">SECOND NAME</th>
+                                    <th scope="col">USERNAME</th>
+                                    <th scope="col"> </th>
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+
+                            <c:forEach items="${deactivatedCustomers}" var="cur" varStatus="loop">
+                                <tbody>
+                                    <tr>
+                                        <td class="indexInput"> <input type="number"   value="0"  readonly="readonly" style="width: 3em; border:none;"></td>
+                                        <td><b><c:out value="${cur.user.official_name}" /></b></td>
+                                        <td><b><c:out value="${cur.user.second_name}" /></b></td>
+                                        <td > <input type="text" value="${cur.user.username}"  readonly="readonly" style="border:none"></td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success"  onclick="location.href = '${pageContext.request.contextPath}/reactivateUser.htm?user_id=${cur.user.user_id}'" >ΕΠΑΝΕΝΕΡΓΟΠΟΙΗΣΗ ΠΕΛΑΤΗ</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </c:forEach>
+                        </table>
+                        <hr>
                     </div>
                 </div>
             </div>

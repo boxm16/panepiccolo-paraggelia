@@ -194,11 +194,26 @@ public class UserDao {
         }
     }
 
-    public void deleteUserByUserID(int user_id) {
-        String deleteUserSQL = "DELETE FROM user WHERE user_id=?";
-
+    public void deactivateUserByUserID(int user_id) {
+        //  String deleteUserSQL = "DELETE FROM user WHERE user_id=?";
+        String deactivateUserSQL = "UPDATE user SET status='deactivated', rating='0' WHERE user_id=?";
         try (Connection connection = DataBaseConnection.getInitConnection();
-                PreparedStatement deleteUser = connection.prepareStatement(deleteUserSQL);) {
+                PreparedStatement deactivateUser = connection.prepareStatement(deactivateUserSQL);) {
+
+            deactivateUser.setInt(1, user_id);
+
+            deactivateUser.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void reactivateUserByUserID(int user_id) {
+        String deactivateUserSQL = "UPDATE user SET status='active' WHERE user_id=?";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement deleteUser = connection.prepareStatement(deactivateUserSQL);) {
 
             deleteUser.setInt(1, user_id);
 
@@ -207,7 +222,23 @@ public class UserDao {
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public void updateUserCustomer(User user) {
+        String editUserSQL = "UPDATE user SET official_name=?, second_name=?, username=?, password=? WHERE user_id=?";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement editUser = connection.prepareStatement(editUserSQL);) {
+
+            editUser.setString(1, user.getOfficial_name());
+            editUser.setString(2, user.getSecond_name());
+            editUser.setString(3, user.getUsername());
+            editUser.setString(4, user.getPassword());
+            editUser.setInt(5, user.getUser_id());
+            editUser.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
