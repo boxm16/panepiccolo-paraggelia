@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/panepiccolo-paraggelia/src/java/Validation/UserValidator.java</file>
-            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/EditCustomer.jsp</file>
-            <file>file:/D:/panepiccolo-paraggelia/src/java/Controllers/UserController.java</file>
-            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/Customers.jsp</file>
-            <file>file:/D:/panepiccolo-paraggelia/src/java/DBTools/UserDao.java</file>
+            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/Products.jsp</file>
+            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/AddNewFavoriteProductPage.jsp</file>
+            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/NewProduct.jsp</file>
+            <file>file:/D:/panepiccolo-paraggelia/web/WEB-INF/jsp/AdminOrderPage.jsp</file>
+            <file>file:/D:/panepiccolo-paraggelia/src/java/Models/Product.java</file>
+            <file>file:/D:/panepiccolo-paraggelia/src/java/Controllers/ProductControler.java</file>
+            <file>file:/D:/panepiccolo-paraggelia/src/java/DBTools/ProductDao.java</file>
         </group>
     </open-files>
 </project-private>

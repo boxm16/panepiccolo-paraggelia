@@ -47,7 +47,11 @@
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
+                                </li>
+                            </ul>
 
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
@@ -57,7 +61,7 @@
 
                     <nav class="navbar navbar-light bg-light">
 
-                        <button type="button" class="btn btn-outline-success"  onclick="location.href = '${pageContext.request.contextPath}/createNewUser.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ ΠΕΛΑΤΗ</button>
+                        <button type="button" class="btn btn-outline-success"  onclick="location.href = '${pageContext.request.contextPath}/createNewCustomer.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ ΠΕΛΑΤΗ</button>
 
 
                         <form class="form-inline">

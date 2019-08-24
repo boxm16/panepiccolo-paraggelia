@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,8 +62,8 @@ public class UserDao {
         }
         return user;
     }
-    
-     public LinkedHashMap<Integer, Customer> getActiveCustomers() {
+
+    public LinkedHashMap<Integer, Customer> getActiveCustomers() {
         LinkedHashMap<Integer, Customer> customersMap = new LinkedHashMap<>();
 
         try (Connection connection = DataBaseConnection.getInitConnection(); Statement statement = connection.createStatement()) {
@@ -109,7 +110,8 @@ public class UserDao {
     public LinkedHashMap<Integer, Customer> getCustomers() {
         LinkedHashMap<Integer, Customer> customersMap = new LinkedHashMap<>();
 
-        try (Connection connection = DataBaseConnection.getInitConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                Statement statement = connection.createStatement()) {
 
             String SQL = "SELECT * FROM user WHERE role='customer' ORDER BY rating  ";
 
@@ -207,7 +209,7 @@ public class UserDao {
         }
     }
 
-    public void inserUser(User user) {
+    public void inserNewCustomer(User user) {
         String inserUserSQL = "INSERT INTO user (official_name, second_name, username, password, role, rating, status, customer_code) VALUES(?,?,?,?,?,?,?,?)";
 
         try (Connection connection = DataBaseConnection.getInitConnection();
@@ -284,5 +286,87 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public ArrayList<User> getObservers() {
+
+        ArrayList<User> observers = new ArrayList<>();
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                Statement statement = connection.createStatement()) {
+
+            String SQL = "SELECT * FROM user WHERE role='observer' ORDER BY rating  ";
+
+            ResultSet rs = statement.executeQuery(SQL);
+
+            while (rs.next()) {
+
+                int user_id = rs.getInt("user_id");
+                String official_name = rs.getString("official_name");
+                String second_name = rs.getString("second_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                String status = rs.getString("status");
+                int rating = rs.getInt("rating");
+                int customer_code = rs.getInt("customer_code");
+
+                User user = new User();
+                user.setUser_id(user_id);
+                user.setOfficial_name(official_name);
+                user.setSecond_name(second_name);
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setRole(role);
+                user.setStatus(status);
+                user.setRating(rating);
+                user.setCustomer_code(customer_code);
+
+                observers.add(user);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return observers;
+    }
+
+    public void inserNewObserver(User user) {
+        String inserUserSQL = "INSERT INTO user (official_name, second_name, username, password, role, rating, status, customer_code) VALUES(?,?,?,?,?,?,?,?)";
+
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement insertUser = connection.prepareStatement(inserUserSQL)) {
+     
+         
+
+            insertUser.setString(1, user.getOfficial_name());
+            insertUser.setString(2, user.getOfficial_name());
+            insertUser.setString(3, user.getUsername());
+            insertUser.setString(4, user.getPassword());
+            insertUser.setString(5, "observer");
+            insertUser.setInt(6, 0);
+            insertUser.setString(7, "active");
+            insertUser.setInt(8, 0);
+            insertUser.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteUserByUserId(int user_id) {
+        
+         String deactivateUserSQL = "DELETE FROM user WHERE user_id=?";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement deleteProduct = connection.prepareStatement(deactivateUserSQL);) {
+            
+            deleteProduct.setInt(1, user_id);
+            
+            deleteProduct.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  }
 
 }

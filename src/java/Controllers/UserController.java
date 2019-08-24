@@ -170,20 +170,20 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "createNewUser.htm", method = RequestMethod.GET)
-    public String createNewUser(HttpSession session, ModelMap model) {
+    @RequestMapping(value = "createNewCustomer.htm", method = RequestMethod.GET)
+    public String createNewCustomer(HttpSession session, ModelMap model) {
         User sessionUser = (User) session.getAttribute("user");
         if (!sessionUser.getRole().equals("admin")) {
             return "index";
         }
         User user = new User();
         model.addAttribute(user);
-        return "CreateNewUser";
+        return "CreateNewCustomer";
 
     }
 
-    @RequestMapping(value = "createNewUserHandling.htm", method = RequestMethod.POST)
-    public String createNewUserHandling(ModelMap model, User user, BindingResult bindingResult, HttpSession session) {
+    @RequestMapping(value = "createNewCustomerHandling.htm", method = RequestMethod.POST)
+    public String createNewCustomerHandling(ModelMap model, User user, BindingResult bindingResult, HttpSession session) {
         User sessionUser = (User) session.getAttribute("user");
         if (!sessionUser.getRole().equals("admin")) {
             return "index";
@@ -192,10 +192,10 @@ public class UserController {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
 
-            return "CreateNewUser";
+            return "CreateNewCustomer";
         } else {
 
-            userDao.inserUser(user);
+            userDao.inserNewCustomer(user);
 
             return "redirect:/Customers.htm";
         }
@@ -254,5 +254,62 @@ public class UserController {
 
             return "redirect:/Customers.htm";
         }
+    }
+
+    @RequestMapping(value = "/Observers.htm", method = RequestMethod.GET)
+    public String Observers(ModelMap model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (!user.getRole().equals("admin")) {
+            return "index";
+        }
+        ArrayList<User> observers = userDao.getObservers();
+
+        model.addAttribute("observers", observers);
+
+        return "Observers";
+    }
+
+    ///
+    @RequestMapping(value = "createNewObserver.htm", method = RequestMethod.GET)
+    public String createNewObserver(HttpSession session, ModelMap model) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+        User user = new User();
+        model.addAttribute(user);
+        return "CreateNewObserver";
+
+    }
+
+    @RequestMapping(value = "createNewObserverHandling.htm", method = RequestMethod.POST)
+    public String createNewObserverHandling(ModelMap model, User user, BindingResult bindingResult, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()) {
+
+            return "CreateNewObserver";
+        } else {
+
+            userDao.inserNewObserver(user);
+
+            return "redirect:/Observers.htm";
+        }
+    }
+
+    @RequestMapping(value = "/deleteObserver.htm", method = RequestMethod.GET)
+    public String deleteProduct(HttpSession session, @RequestParam(value = "user_id") int user_id) {
+        User sessionUser = (User) session.getAttribute("user");
+        if (!sessionUser.getRole().equals("admin")) {
+            return "index";
+        }
+        userDao.deleteUserByUserId(user_id);
+
+        return "redirect:/Observers.htm";
+
     }
 }

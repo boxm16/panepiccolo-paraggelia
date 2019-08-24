@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ  ΤΟΥ ΠΕΛΑΤΗ</title>
+        <title>ΚΑΙΝΟΥΡΓΙΟΣ ΠΕΛΑΤΗΣ</title>
 
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -38,7 +38,7 @@
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
                                 </li>
                             </ul>
-                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                           <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
                                 </li>
@@ -53,14 +53,9 @@
                     </nav>
 
 
-                    <spring:form modelAttribute="userCustomer" cssClass="login-form" action="${pageContext.request.contextPath}/editCustomerHandling.htm" method="POST">  
+                    <spring:form modelAttribute="user" cssClass="login-form" action="${pageContext.request.contextPath}/createNewUserHandling.htm" method="POST">  
                         <div class="col-md-4 login-sec">
-                            <h4 class="text-center">ΑΛΛΑΞΕ ΣΤΟΙΧΕΙΑ ΤΟΥ ΠΕΛΑΤΗ</h4>
-
-                            <div>
-                                <spring:input  hidden="hidden"  path="user_id" /> 
-                            </div> 
-
+                            <h4 class="text-center">ΠΡΟΣΘΕΣΕ ΚΑΙΝΟΥΡΓΙΟ ΠΕΛΑΤΗ</h4>
                             <div class="form-group">
                                 <spring:label path="username" cssClass="text-uppercase" >USERNAME</spring:label>
                                 <spring:input  cssClass="form-control" path="username" placeholder="ΣΥΜΠΛΗΡΩΣΕ USERNAME"/> 
@@ -69,19 +64,19 @@
                             </div>  
                             <div class="form-group">
                                 <spring:label path="official_name" cssClass="text-uppercase" >OFFICIAL NAME</spring:label>
-                                <spring:input  cssClass="form-control" path="official_name" /> 
+                                <spring:input  cssClass="form-control" path="official_name" placeholder="ΣΥΜΠΛΗΡΩΣΕ ΕΠΙΣΗΜΗ ΟΝΟΜΑΣΙΑ"/> 
                                 <spring:errors path="official_name" cssClass="error error-message"/>
 
                             </div>  
                             <div class="form-group">
                                 <spring:label path="second_name" cssClass="text-uppercase">SECOND NAME</spring:label>
-                                <spring:input  cssClass="form-control" path="second_name"/> 
+                                <spring:input  cssClass="form-control" path="second_name" placeholder="ΣΥΜΠΛΗΡΩΣΕ ΔΕΥΤΕΡΗ ΟΝΟΜΑΣΙΑ"/> 
                                 <spring:errors path="second_name" cssClass="error error-message"/>
 
                             </div>  
                             <div class="form-group">
                                 <spring:label path="password" cssClass="text-uppercase">PASSWORD</spring:label>
-                                <spring:input  cssClass="form-control" path="password" /> 
+                                <spring:password  cssClass="form-control" path="password" placeholder="ΣΥΜΠΛΗΡΩΣΕ ΣΥΝΘΗΜΑΤΙΚΟ"/> 
                                 <spring:errors path="password" cssClass="error error-message"/>
 
                             </div>  

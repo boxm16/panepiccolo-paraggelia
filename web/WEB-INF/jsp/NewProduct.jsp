@@ -42,9 +42,13 @@
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm"><b>ΠΡΟΪΟΝΤΑ</b></a>
                                 </li>
                             </ul>
-                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                       <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
+                                </li>
+                            </ul>
 
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
@@ -57,13 +61,13 @@
                     <form action="${pageContext.request.contextPath}/createNewProductHandling.htm" method="POST" modelAttribute="product" >
 
                         <label>SELLING NAME</label><br/> 
-                        <input type="text" name="selling_name" style="width:30em"/><br/>
+                        <input type="text" name="selling_name" required style="width:30em"/><br/>
                         <label>BAKING NAME</label><br/> 
-                        <input type="text" name="baking_name" style="width:30em"/><br/>
+                        <input type="text" name="baking_name" required style="width:30em"/><br/>
                         <label>SELLING UNIT</label> <br/>
-                        <input type="number" name="selling_unit" style="width:3em"/><br/>
+                        <input type="number" name="selling_unit" required style="width:3em"/><br/>
                         <label>BAKING UNIT</label> <br/>
-                        <input type="number" name="baking_unit" style="width:3em"/><br/>
+                        <input type="number" name="baking_unit" required style="width:3em"/><br/>
                         <br/>
                         <input type="submit" value="ΑΠΟΘΗΚΕΥΣΗ" />
                     </form>

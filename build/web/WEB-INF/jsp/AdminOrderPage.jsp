@@ -58,7 +58,11 @@
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
+                                </li>
+                            </ul>
 
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
