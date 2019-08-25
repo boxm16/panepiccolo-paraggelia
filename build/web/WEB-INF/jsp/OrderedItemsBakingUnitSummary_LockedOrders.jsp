@@ -1,6 +1,7 @@
+
 <%-- 
-    Document   : OrdererdItemsList
-    Created on : May 5, 2019, 8:40:47 AM
+    Document   : MAIN
+    Created on : Apr 7, 2019, 4:44:32 AM
     Author     : boxm1
 --%>
 
@@ -11,43 +12,48 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ORDERED ITEMS LIST (LOCKED ORDERS)</title>
+
+        <title>ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</title>
+
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
 
     </head>
     <body>
+
         <div class="container">
             <div class="row">
                 <div class="col-sm">
+                    <!--https://www.codeply.com/go/qhaBrcWp3v-->
 
                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
-                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto"><b>ΠΑΡΑΓΓΕΛΙΕΣ</b></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                             <ul class="navbar-nav w-100 justify-content-center">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="//codeply.com">ΠΡΟΪΟΝΤΑ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
                                 </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Right</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
                                 </li>
                             </ul>
                         </div>
@@ -56,14 +62,14 @@
 
                     <nav class="nav flex-column nav-pills" style="background:lightskyblue;" >
                         <a class="nav-link " href="${pageContext.request.contextPath}/LockedOrdersPage.htm"">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a>
-                        <a class="nav-link " href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
+                        <a class="nav-link "  href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
                         <a class="nav-link active" href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> 
                         <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
                         <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
                     </nav>
 
                     <div class="table-responsive">
-                        <h1>Hello Ordered Items List!</h1>
+                        <h3>ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</h3>
 
                         <a href="${pageContext.request.contextPath}/AdminMainPage.htm">Go Home</a><br>
                         <hr>

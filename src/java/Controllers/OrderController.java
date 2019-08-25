@@ -244,7 +244,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/ObserverPage.htm", method = RequestMethod.GET)
-    public String LockedOrdersObserverPage(HttpSession session, ModelMap model
+    public String ObserverPage_ActiveOrders(HttpSession session, ModelMap model
     ) {
         User user = (User) session.getAttribute("user");
 
@@ -252,16 +252,33 @@ public class OrderController {
             return "index";
         }
 
-        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getActiveCustomers();
+        LinkedHashMap<Integer, Order> activeOrdersMap = orderDao.getActiveOrdersMap();
+
+        LinkedHashMap<Integer, Customer> filledCustomersList_ActiveOrders = mixCustomer(customersMap, activeOrdersMap);
+        model.addAttribute("activeOrdersMap", activeOrdersMap);
+        model.addAttribute("filledCustomersList_ActiveOrders", filledCustomersList_ActiveOrders);
+
+        return "ObserverPage";
+    }
+
+    @RequestMapping(value = "/ObserverPage_LockedOrders.htm", method = RequestMethod.GET)
+    public String ObserverPage_LockedOrders(HttpSession session, ModelMap model
+    ) {
+        User user = (User) session.getAttribute("user");
+
+        if (!user.getRole().equals("observer")) {
+            return "index";
+        }
+
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getActiveCustomers();
         LinkedHashMap<Integer, Order> lockedOrdersMap = orderDao.getLockedOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList_LockedOrders = mixCustomer(customersMap, lockedOrdersMap);
-
-        System.out.println("ActiveOrdersMap" + lockedOrdersMap.size());
-        model.addAttribute("activeOrdersMap", lockedOrdersMap);
+        model.addAttribute("lockedOrdersMap", lockedOrdersMap);
         model.addAttribute("filledCustomersList_LockedOrders", filledCustomersList_LockedOrders);
 
-        return "ObserverPage";
+        return "ObserverPage_LockedOrders";
     }
 
     public LinkedHashMap<Integer, Customer> mixCustomer(LinkedHashMap<Integer, Customer> customersMap, LinkedHashMap<Integer, Order> activeOrdersMap) {

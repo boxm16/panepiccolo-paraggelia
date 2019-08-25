@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>MAIN PAGE</title>
+        <title>ΤΕΤΡΑΔΙΟ ΠΑΡΑΓΓΕΛΙΩΝ</title>
 
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -68,7 +68,7 @@
                     </nav>
 
                     <div class="table-responsive">
-
+                        <h3>ΤΕΤΡΑΔΙΟ ΠΑΡΑΓΓΕΛΙΩΝ</h3>   
                         <hr>
 
                         23:00, ΠΑΡΑΓΓΕΛΙΕΣ ΠΟΥ ΕΙΝΑΙ ΝΑ ΠΑΡΑΔΟΘΟΥΝ ΤΗΝ ΕΠΟΜΕΝΗ ΜΕΡΑ, ΚΛΕΙΔΩΝΟΥΝ. ΔΕΝ ΥΠΑΡΧΕΙ ΔΥΝΑΤΟΤΗΤΑ ΑΛΛΑΓΗΣ (Η ΑΚΥΡΩΣΗΣ) ΠΑΡΑΓΓΕΛΙΑΣ ΜΕΣΩ ΣΥΣΤΗΜΑΤΟΣ. ΜΟΝΟ ΤΗΛΕΦΩΝΙΚΑ<br>

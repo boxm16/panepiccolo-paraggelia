@@ -63,10 +63,6 @@
 
                         <button type="button" class="btn btn-outline-success"  onclick="location.href = '${pageContext.request.contextPath}/createNewCustomer.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ ΠΕΛΑΤΗ</button>
 
-
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        </form>
                     </nav>
 
                     <div class="container">
