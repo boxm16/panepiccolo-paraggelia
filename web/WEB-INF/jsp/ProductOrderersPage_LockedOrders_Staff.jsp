@@ -14,9 +14,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello ProductOrderers</h1>
+    ProductOrderersPage_LockedOrders_Staff
 
-        <a href="${pageContext.request.contextPath}/AdminMainPage.htm">Go Home</a><br>
+                         <a href="${pageContext.request.contextPath}/ObserverPage.htm">ΔΕΣ ΟΛΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a><br>
         <hr>
 
 
@@ -31,8 +31,7 @@
                     <td><c:out value="${current.order.order_id}" /></td>
                     <td><c:out value="${current.user.second_name}" /></td>
                     <td><c:out value="${current.quantity}" /></td>
-                    <td><button onclick="location.href = '${pageContext.request.contextPath}/displayOrder.htm?order_id=${current.order.order_id}'">ΔΕΣ ΠΑΡΑΓΓΕΛΙΑ ΑΝΑΛΥΤΗΚΑ</button></td>
-
+                   
 
                 </tr>
             </c:forEach>

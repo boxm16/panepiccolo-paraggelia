@@ -31,27 +31,11 @@
                     <!--https://www.codeply.com/go/qhaBrcWp3v-->
 
                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
-                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto"><b>ΠΑΡΑΓΓΕΛΙΕΣ</b></a>
+                        <a href="${pageContext.request.contextPath}/ObserverPage.htm" class="navbar-brand d-flex w-50 mr-auto"><b>ΠΑΡΑΓΓΕΛΙΕΣ</b></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
-                            <ul class="navbar-nav w-100 justify-content-center">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm">ΤΑΜΠΕΛΕΣ</a>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
-                                </li>
-                            </ul>
 
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
@@ -66,8 +50,6 @@
                         <a class="nav-link active " href="${pageContext.request.contextPath}/LockedOrdersPage.htm"">ΔΕΣ ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</a>
                         <a class="nav-link " href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
                         <a class="nav-link" href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> 
-                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
-                        <a class="nav-link" href="${pageContext.request.contextPath}/LabelsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΗΜΕΡΟΜΗΝΙΩΝ ΑΝΑΛΥΤΙΚΑ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> <br>
                     </nav>
 
 

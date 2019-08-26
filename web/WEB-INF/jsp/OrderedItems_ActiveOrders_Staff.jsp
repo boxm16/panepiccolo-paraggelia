@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-sm">
                     <!--https://www.codeply.com/go/qhaBrcWp3v-->
-                    <h3> ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</h3>
+
                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
                         <a href="${pageContext.request.contextPath}/ObserverPage.htm" class="navbar-brand d-flex w-50 mr-auto"><b>ΠΑΡΑΓΓΕΛΙΕΣ</b></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
@@ -47,10 +47,31 @@
                         <a class="nav-link active"  href="${pageContext.request.contextPath}/OrderedItemsList_ActiveOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a>
                         <a class="nav-link " href="${pageContext.request.contextPath}/OrderedItemsList_LockedOrders.htm">ΔΕΣ ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ ΑΝΑΛΥΤΙΚΑ(ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</a> 
                     </nav>
-
+                    <h3> ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ (ΕΝΕΡΓΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</h3>
                     <div class="table-responsive">
 
+<table id="table" class="table-hover " border="5">
+                            <thead>
+                                <tr >
+                                    <th >ID</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <c:forEach items="${OrderedItemsBakingUnitSummary_ActiveOrders}" var="current" varStatus="loop">
+                                <tr >
+                                    <td><input type="text" value="${current.product.product_id}" readonly="readonly" name="orderItems[${loop.index}].product.product_id"  style="width: 2em"  /></td>
+                                    <td><b><c:out value="${current.product.baking_name}" /></b></td>
+                                    <td><b><c:out value="${current.quantity}" /></b></td>
+                                    <td><button  class="btn btn-success" onclick="location.href = '${pageContext.request.contextPath}/ProductOrderers.htm?product_id=${current.product.product_id}'">ΔΕΣ ΑΝΑΛΥΤΙΚΑ</button></td>
 
+
+
+                                </tr>
+                            </c:forEach>
+
+                        </table>
 
 
 

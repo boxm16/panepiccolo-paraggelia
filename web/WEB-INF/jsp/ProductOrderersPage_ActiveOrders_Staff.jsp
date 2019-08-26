@@ -1,7 +1,7 @@
 <%-- 
-    Document   : BakerMainMenu
-    Created on : Jun 16, 2019, 3:58:51 AM
-    Author     : boxm1
+    Document   : ProductOrderersPage_ActiveOrders_Staff
+    Created on : Aug 26, 2019, 4:00:48 PM
+    Author     : Michail Sitmalidis
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Baker Main Menu</h1>
+        ProductOrderersPage_ActiveOrders_Staff
     </body>
 </html>

@@ -74,7 +74,6 @@
                     <div class="table-responsive">
                         <h3>ΣΥΝΟΛΟ ΤΕΜΑΧΙΩΝ (ΚΛΕΙΔΩΜΕΝΕΣ ΠΑΡΑΓΓΕΛΙΕΣ)</h3>
 
-                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm">Go Home</a><br>
                         <hr>
                         <table id="table" class="table-hover " border="5">
                             <thead>

@@ -228,20 +228,29 @@ public class OrderController {
     public String LockedOrders(HttpSession session, ModelMap model
     ) {
         User user = (User) session.getAttribute("user");
-
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
         if (user.getRole().equals("customer")) {
-            return "index";
+            message = "";
+            returnPoint = "index";
         }
         //inner join query , no need for 2 connections, change it
         LinkedHashMap<Integer, Customer> customersMap = userDao.getActiveCustomers();
         LinkedHashMap<Integer, Order> lockedOrdersMap = orderDao.getLockedOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList_LockedOrders = mixCustomer(customersMap, lockedOrdersMap);
-
+        model.addAttribute("message", message);
         model.addAttribute("activeOrdersMap", lockedOrdersMap);
         model.addAttribute("filledCustomersList_LockedOrders", filledCustomersList_LockedOrders);
-
-        return "LockedOrdersPage";
+        if (user.getRole().equals("admin")) {
+            message = "";
+            returnPoint = "LockedOrdersPage_Admin";
+        }
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "LockedOrdersPage_Staff";
+        }
+        return returnPoint;
     }
 
     @RequestMapping(value = "/ObserverPage.htm", method = RequestMethod.GET)
@@ -294,28 +303,56 @@ public class OrderController {
     @RequestMapping(value = "/OrderedItemsList_ActiveOrders", method = RequestMethod.GET)
     public String OrderedItemsList(HttpSession session, ModelMap model) {
         User user = (User) session.getAttribute("user");
-
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
         if (user.getRole().equals("customer")) {
-            return "index";
+            message = "";
+            returnPoint = "index";
+
         }
-        List<OrderItem> OrderedItemsBakingUnitSummary_ActiveOrders = orderDao.getOrderedItemsBakingUnitSummary_ActiveOrders();
+        if (user.getRole().equals("admin")) {
+            List<OrderItem> OrderedItemsBakingUnitSummary_ActiveOrders = orderDao.getOrderedItemsBakingUnitSummary_ActiveOrders();
+            model.addAttribute("OrderedItemsBakingUnitSummary_ActiveOrders", OrderedItemsBakingUnitSummary_ActiveOrders);
+            message = "";
+            returnPoint = "OrderedItems_ActiveOrders_Admin";
 
-        model.addAttribute("OrderedItemsBakingUnitSummary_ActiveOrders", OrderedItemsBakingUnitSummary_ActiveOrders);
-        return "OrderedItemsBakingUnitSummary_ActiveOrders";
-
+        }
+        if (user.getRole().equals("observer")) {
+            List<OrderItem> OrderedItemsBakingUnitSummary_ActiveOrders = orderDao.getOrderedItemsBakingUnitSummary_ActiveOrders();
+            model.addAttribute("OrderedItemsBakingUnitSummary_ActiveOrders", OrderedItemsBakingUnitSummary_ActiveOrders);
+            message = "";
+            returnPoint = "OrderedItems_ActiveOrders_Staff";
+        }
+        model.addAttribute("message", message);
+        return returnPoint;
     }
 
     @RequestMapping(value = "/OrderedItemsList_LockedOrders", method = RequestMethod.GET)
     public String OrderedItemsList_LockedOrders(HttpSession session, ModelMap model) {
+
         User user = (User) session.getAttribute("user");
-
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
         if (user.getRole().equals("customer")) {
-            return "index";
-        }
-        List<OrderItem> OrderedItemsBakingUnitSummary_LockedOrders = orderDao.getOrderedItemsBakingUnitSummary_LockedOrders();
+            message = "";
+            returnPoint = "index";
 
-        model.addAttribute("OrderedItemsBakingUnitSummary_LockedOrders", OrderedItemsBakingUnitSummary_LockedOrders);
-        return "OrderedItemsBakingUnitSummary_LockedOrders";
+        }
+        if (user.getRole().equals("admin")) {
+            List<OrderItem> OrderedItemsBakingUnitSummary_LockedOrders = orderDao.getOrderedItemsBakingUnitSummary_LockedOrders();
+            model.addAttribute("OrderedItemsBakingUnitSummary_LockedOrders", OrderedItemsBakingUnitSummary_LockedOrders);
+            message = "";
+            returnPoint = "OrderedItems_LockedOrders_Admin";
+
+        }
+        if (user.getRole().equals("observer")) {
+            List<OrderItem> OrderedItemsBakingUnitSummary_LockedOrders = orderDao.getOrderedItemsBakingUnitSummary_LockedOrders();
+            model.addAttribute("OrderedItemsBakingUnitSummary_LockedOrders", OrderedItemsBakingUnitSummary_LockedOrders);
+            message = "";
+            returnPoint = "OrderedItems_LockedOrders_Staff";
+        }
+        model.addAttribute("message", message);
+        return returnPoint;
 
     }
 
