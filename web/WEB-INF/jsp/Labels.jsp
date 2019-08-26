@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>ΠΡΟΙΟΝΤΑ</title>
+        <title>ΤΑΜΠΕΛΕΣ</title>
 
 
         <style>
@@ -36,13 +37,16 @@
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                             <ul class="navbar-nav w-100 justify-content-center">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
+                                    <a class="nav-link " href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm"><b>ΠΡΟΪΟΝΤΑ</b></a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="${pageContext.request.contextPath}/Labels.htm"><b>ΤΑΜΠΕΛΕΣ</b></a>
                                 </li>
                             </ul>
-                       <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
                                 </li>
@@ -55,28 +59,55 @@
                             </ul>
                         </div>
                     </nav>
-                    <hr>
-                    <h3>ΚΑΤΑΧΩΡΗΣΕ ΚΑΙΝΟΥΡΓΙΟ ΠΡΟΪΟΝΤ</h3>
-                    <hr>
-                    <form action="${pageContext.request.contextPath}/createNewProductHandling.htm" method="POST" modelAttribute="product" >
 
-                        <label>SELLING NAME</label><br/> 
-                        <input type="text" name="selling_name" required style="width:30em"/><br/>
-                        <label>BAKING NAME</label><br/> 
-                        <input type="text" name="baking_name" required style="width:30em"/><br/>
-                        <label>SELLING UNIT</label> <br/>
-                        <input type="number" name="selling_unit" required style="width:3em"/><br/>
-                        <label>BAKING UNIT</label> <br/>
-                        <input type="number" name="baking_unit" required style="width:3em"/><br/>
-                        <br/>
-                        <input type="submit" value="ΑΠΟΘΗΚΕΥΣΗ" />
-                    </form>
+                    <nav class="navbar navbar-light bg-light">
+
+                        <button type="button" class="btn btn-outline-primary"  onclick="location.href = '${pageContext.request.contextPath}/createNewLabel.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΑΣ ΤΑΜΠΕΛΑΣ</button>
+                    </nav>
 
                     <div class="container">
+
+                        <table class="table table-hover" id="myTable">
+                            <thead>
+                                <tr>
+
+
+                                    <th scope="col">ΠΕΡΙΓΡΑΦΗ ΤΑΜΠΕΛΑΣ</th>
+
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${labels}" var="cur" >
+
+                                    <tr >
+                                        <td><b><c:out value="${cur.label_description}" /></b></td>
+                                        <td>
+
+                                            <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deleteLabel.htm?label_id=${cur.label_id}'" >ΔΙΑΓΡΑΦΗ ΤΑΜΠΕΛΑΣ</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+
+                        <hr>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+
+
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 
     </body>
 </html>

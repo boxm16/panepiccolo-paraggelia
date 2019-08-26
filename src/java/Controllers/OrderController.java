@@ -232,7 +232,8 @@ public class OrderController {
         if (user.getRole().equals("customer")) {
             return "index";
         }
-        LinkedHashMap<Integer, Customer> customersMap = userDao.getCustomers();
+        //inner join query , no need for 2 connections, change it
+        LinkedHashMap<Integer, Customer> customersMap = userDao.getActiveCustomers();
         LinkedHashMap<Integer, Order> lockedOrdersMap = orderDao.getLockedOrdersMap();
 
         LinkedHashMap<Integer, Customer> filledCustomersList_LockedOrders = mixCustomer(customersMap, lockedOrdersMap);

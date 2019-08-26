@@ -8,6 +8,7 @@ package DBTools;
 import Models.Label;
 import Models.LabelsListItem;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,13 +25,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LabelDao {
 
-    public List<Label> displayLabels() {
+    public ArrayList<Label> displayLabels() {
 
         ArrayList<Label> labelsBag = new ArrayList();
 
         try (Connection connection = DataBaseConnection.getInitConnection();
                 Statement statement = connection.createStatement();) {
-            String SQL_QUERY = "SELECT * FROM label;";
+            String SQL_QUERY = "SELECT * FROM label WHERE label_status='active';";
             ResultSet resultSet = statement.executeQuery(SQL_QUERY);
 
             while (resultSet.next()) {
@@ -125,6 +126,38 @@ public class LabelDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return getLabelsListItems_LockedOrders;
+
+    }
+
+    public void inserLabel(Label label) {
+        String inserLabelSQL = "INSERT INTO label(label_description, label_status) VALUES (?,?)";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement insertLabel = connection.prepareStatement(inserLabelSQL);) {
+
+            insertLabel.setString(1, label.getLabel_description());
+
+            insertLabel.setString(2, label.getLabel_status());
+
+            insertLabel.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void deleteLabelByLabelId(int label_id) {
+
+        String deleteLabelSQL = "UPDATE label SET label_status='deleted' WHERE label_id=?";
+        try (Connection connection = DataBaseConnection.getInitConnection();
+                PreparedStatement deleteLabel = connection.prepareStatement(deleteLabelSQL);) {
+
+            deleteLabel.setInt(1, label_id);
+            deleteLabel.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,8 +9,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Order Page</title>
+        <title>ΚΑΙΝΟΥΡΓΙΑ ΤΑΜΠΕΛΑ</title>
 
+
+        <style>
+
+
+        </style>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,14 +42,13 @@
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm">ΤΑΜΠΕΛΕΣ</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm"><b>ΤΑΜΠΕΛΕΣ</b></a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm"><b>STAFF</b></a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
                                 </li>
-
                             </ul>
 
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -55,60 +58,23 @@
                             </ul>
                         </div>
                     </nav>
+                    <hr>
+                    <h3>ΚΑΤΑΧΩΡΗΣΕ ΚΑΙΝΟΥΡΓΙΑ ΤΑΜΠΕΛΑ</h3>
+                    <hr>
+                    <form action="${pageContext.request.contextPath}/createNewLabelHandling.htm" method="POST" modelAttribute="product" >
 
-                    <nav class="navbar navbar-light bg-light">
+                        <label>ΠΕΡΙΓΡΑΦΗ</label><br/> 
+                        <input type="text" name="label_description" required style="width:30em"/><br/>
 
-                        <button type="button" class="btn btn-outline-success"  onclick="location.href = '${pageContext.request.contextPath}/createNewObserver.htm'" >ΔΗΜΙΟΥΡΓΙΑ ΚΑΙΝΟΥΡΓΙΟΥ STAFF</button>
-
-
-                    </nav>
+                        <br/>
+                        <input type="submit" value="ΑΠΟΘΗΚΕΥΣΗ" />
+                    </form>
 
                     <div class="container">
-
-                        <table class="table table-hover" id="myTable">
-                            <thead>
-                                <tr>
-
-                                    <th scope="col">OFFICIAL NAME</th>
-                                    <th scope="col">SECOND NAME</th>
-                                    <th scope="col">USERNAME</th>
-
-                                    <th scope="col"></th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${observers}" var="cur" >
-
-                                    <tr >
-                                        <td><b><c:out value="${cur.official_name}" /></b></td>
-                                        <td><b><c:out value="${cur.second_name}" /></b></td>
-                                        <td><b><c:out value="${cur.username}" /></b></td>
-
-                                        <td>
-
-                                            <button type="button" class="btn btn-sm btn-danger"  onclick="location.href = '${pageContext.request.contextPath}/deleteObserver.htm?user_id=${cur.user_id}'" >ΔΙΑΓΡΑΦΗ STAFF</button>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-
-
-
-                        <hr>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 
     </body>
 </html>
