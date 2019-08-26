@@ -374,14 +374,28 @@ public class OrderController {
     @RequestMapping(value = "/ProductOrderers", method = RequestMethod.GET)
     public String productOrderers_ActiveOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
         User user = (User) session.getAttribute("user");
-
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
         if (user.getRole().equals("customer")) {
-            return "index";
+            message = "";
+            returnPoint = "index";
+
         }
         List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_ActiveOrders(product_id);
-
         model.addAttribute("productOrderersList", productOrderersList);
-        return "ProductOrderersPage";
+        model.addAttribute("message", message);
+
+        if (user.getRole().equals("admin")) {
+            message = "";
+            returnPoint = "ProductOrderersPage_ActiveOrders_Admin";
+
+        }
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "ProductOrderersPage_ActiveOrders_Staff";
+
+        }
+        return returnPoint;
 
     }
 
@@ -389,15 +403,28 @@ public class OrderController {
 
     public String productOrderers_LockedOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
         User user = (User) session.getAttribute("user");
-
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
         if (user.getRole().equals("customer")) {
-            return "index";
+            message = "";
+            returnPoint = "index";
+
         }
-        List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_LockedOrders(product_id);
-
+        List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_ActiveOrders(product_id);
         model.addAttribute("productOrderersList", productOrderersList);
-        return "ProductOrderersPage_LockedOrders";
+        model.addAttribute("message", message);
 
+        if (user.getRole().equals("admin")) {
+            message = "";
+            returnPoint = "ProductOrderersPage_LockedOrders_Admin";
+
+        }
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "ProductOrderersPage_LockedOrders_Staff";
+
+        }
+        return returnPoint;
     }
 
     @RequestMapping(value = "/ProductOrderers_LockedOrders_ObserverPage", method = RequestMethod.GET)
