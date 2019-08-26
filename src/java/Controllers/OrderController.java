@@ -410,7 +410,7 @@ public class OrderController {
             returnPoint = "index";
 
         }
-        List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_ActiveOrders(product_id);
+        List<ProductOrderer> productOrderersList = orderDao.getProductOrderersList_LockedOrders(product_id);
         model.addAttribute("productOrderersList", productOrderersList);
         model.addAttribute("message", message);
 
