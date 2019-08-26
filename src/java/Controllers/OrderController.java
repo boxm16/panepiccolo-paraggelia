@@ -52,11 +52,13 @@ public class OrderController {
     @Autowired
     private OrderTemplateDao orderTemplateDao;
 
-    @RequestMapping(value = "/AdminOrderPage.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/NewOrderPage.htm", method = RequestMethod.GET)
 
-    public String adminOrderPage(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String newOrderPage(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
 
         User user = (User) session.getAttribute("user");
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
 
         if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
             User customer = userDao.getUserByID(user_id);
@@ -76,12 +78,14 @@ public class OrderController {
             model.addAttribute("due_day1", date);
             model.addAttribute("favoriteProductsList", favoriteProductsList);
             model.addAttribute("customer", customer);
-
-            return "AdminOrderPage";
-        } else {
-            return "index";
+            if (user.getRole().equals("admin")) {
+                returnPoint = "NewOrderPage_Admin";
+            }
+            if (user.getRole().equals("customer")) {
+                returnPoint = "NewOrderPage_Customer";
+            }
         }
-
+        return returnPoint;
     }
 
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
@@ -229,7 +233,7 @@ public class OrderController {
     ) {
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -304,7 +308,7 @@ public class OrderController {
     public String OrderedItemsList(HttpSession session, ModelMap model) {
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -332,7 +336,7 @@ public class OrderController {
 
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -375,7 +379,7 @@ public class OrderController {
     public String productOrderers_ActiveOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -404,7 +408,7 @@ public class OrderController {
     public String productOrderers_LockedOrders(HttpSession session, ModelMap model, @RequestParam(value = "product_id") int product_id) {
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -446,7 +450,7 @@ public class OrderController {
 
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
-        String returnPoint = "Error";
+        String returnPoint = "ErrorPage";
         if (user.getRole().equals("customer")) {
             message = "";
             returnPoint = "index";
@@ -473,25 +477,40 @@ public class OrderController {
 
     @RequestMapping(value = "/LoadMyLastOrder.htm", method = RequestMethod.GET)
     public String loadMyLastOrder(ModelMap model, HttpSession session, @RequestParam(value = "user_id") int user_id) {
+        User user = (User) session.getAttribute("user");
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
+        
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            Order order = orderDao.getMyLastOrder(user_id);
+            User customer = userDao.getUserByID(user_id);
 
-        // Order order = orderDao.getOrderByID(myLastOrderId);
-        Order order = orderDao.getMyLastOrder(user_id);
-        User customer = userDao.getUserByID(user_id);
+            ZoneId athensZone = ZoneId.of("Europe/Athens");
+            LocalDate date = LocalDate.now(athensZone);
 
-        ZoneId athensZone = ZoneId.of("Europe/Athens");
-        LocalDate date = LocalDate.now(athensZone);
+            DayOfWeek SATURDAY = DayOfWeek.valueOf("SATURDAY");
+            if (date.getDayOfWeek() == SATURDAY) {
+                date = date.plusDays(2);
+            } else {
+                date = date.plusDays(1);
+            }
 
-        DayOfWeek SATURDAY = DayOfWeek.valueOf("SATURDAY");
-        if (date.getDayOfWeek() == SATURDAY) {
-            date = date.plusDays(2);
-        } else {
-            date = date.plusDays(1);
+            model.addAttribute("due_day1", date);
+            model.addAttribute("customer", customer);
+            model.addAttribute("order", order);
+
+            if (user.getRole().equals("admin")) {
+                message = "";
+                returnPoint = "MyLastOrderPage_Admin";
+            }
+            if (user.getRole().equals("customer")) {
+                message = "";
+                returnPoint = "MyLastOrderPage_Customer";
+            }
         }
 
-        model.addAttribute("due_day1", date);
-        model.addAttribute("customer", customer);
-        model.addAttribute("order", order);
-        return "MyLastOrderPage";
+        model.addAttribute("message", message);
+        return returnPoint;
     }
 
 }

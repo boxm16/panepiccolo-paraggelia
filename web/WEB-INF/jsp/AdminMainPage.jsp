@@ -117,7 +117,7 @@
                                             </c:forEach>
                                             <tfoot>
                                                 <tr>
-                                                    <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/AdminOrderPage.htm?user_id=${current.key}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
+                                                    <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/NewOrderPage.htm?user_id=${current.key}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
                                                     <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${current.key}'">ΡΥΘΜΙΣΕΙΣ ΠΕΛΑΤΗ</button></td>
                                                 </tr>
                                             </tfoot>

@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 
-        <title>Order Page</title>
+        <title>NEW ORDER</title>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -43,28 +43,11 @@
                     <!--https://www.codeply.com/go/qhaBrcWp3v-->
 
                     <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
-                        <a href="${pageContext.request.contextPath}/AdminMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΠΑΡΑΓΓΕΛΙΕΣ</a>
+                        <a href="${pageContext.request.contextPath}/CustomerMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΑΡΧΙΚΗ ΣΕΛΙΔΑ</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
-                            <ul class="navbar-nav w-100 justify-content-center">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Customers.htm">ΠΕΛΑΤΕΣ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm">ΤΑΜΠΕΛΕΣ</a>
-                                </li>
-                            </ul>
-
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
@@ -74,8 +57,7 @@
                     </nav>
 
                     <div class="table-responsive">
-                        <h1>Admin Order Page</h1>
-                        <h1>${customer.username}'s Favorite Products</h1>
+                        <h3>ΚΑΤΑΧΩΡΗΣΕ ΚΑΙΝΟΥΡΓΙΑ ΠΑΡΑΓΓΕΛΙΑ </h3> 
                         <hr>
                         <button  class="btn btn-info btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/LoadMyLastOrder.htm?user_id=${customer.user_id}'">LOAD MY LAST ORDER</button>
                         &#160;  &#160;

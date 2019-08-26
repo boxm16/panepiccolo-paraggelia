@@ -24,57 +24,73 @@
 
     </head>
     <body>
-
         <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <nav class="navbar navbar-light navbar-expand-md bg-primary justify-content-center">
+                        <a href="${pageContext.request.contextPath}/CustomerMainPage.htm" class="navbar-brand d-flex w-50 mr-auto">ΑΡΧΙΚΗ ΣΕΛΙΔΑ</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+                            <ul class="navbar-nav w-100 justify-content-center">
 
-            <div class="col-sm">
-                <div class="table-responsive">
-                    <h1>CUSTOMER MAIN PAGE!</h1>
-                    <hr>
-                    23:00, ΠΑΡΑΓΓΕΛΙΕΣ ΠΟΥ ΕΙΝΑΙ ΝΑ ΠΑΡΑΔΟΘΟΥΝ ΤΗΝ ΕΠΟΜΕΝΗ ΜΕΡΑ, ΚΛΕΙΔΩΝΟΥΝ. ΔΕΝ ΥΠΑΡΧΕΙ ΔΥΝΑΤΟΤΗΤΑ ΑΛΛΑΓΗΣ (Η ΑΚΥΡΩΣΗΣ) ΠΑΡΑΓΓΕΛΙΑΣ ΜΕΣΩ ΣΥΣΤΗΜΑΤΟΣ. ΜΟΝΟ ΤΗΛΕΦΩΝΙΚΑ<br>
-                    <hr>
 
-                    <div>
-                        <table id="customerTable" class="table-hover " border="5" width="100%">
+                                <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="${pageContext.request.contextPath}/Logout.htm">ΑΠΟΣΥΝΔΕΣΗ</a>
+                                    </li>
+                                </ul>
+                        </div>
+                    </nav>
+                    <div class="table-responsive">
+                        <h1>CUSTOMER MAIN PAGE!</h1>
+                        <hr>
+                        23:00, ΠΑΡΑΓΓΕΛΙΕΣ ΠΟΥ ΕΙΝΑΙ ΝΑ ΠΑΡΑΔΟΘΟΥΝ ΤΗΝ ΕΠΟΜΕΝΗ ΜΕΡΑ, ΚΛΕΙΔΩΝΟΥΝ. ΔΕΝ ΥΠΑΡΧΕΙ ΔΥΝΑΤΟΤΗΤΑ ΑΛΛΑΓΗΣ (Η ΑΚΥΡΩΣΗΣ) ΠΑΡΑΓΓΕΛΙΑΣ ΜΕΣΩ ΣΥΣΤΗΜΑΤΟΣ. ΜΟΝΟ ΤΗΛΕΦΩΝΙΚΑ<br>
+                        <hr>
 
-                            <c:forEach items="${myActiveOrdersMap.values()}" var="cur" varStatus="loop">
+                        <div>
+                            <table id="customerTable" class="table-hover " border="5" width="100%">
 
-                                <tr bgcolor="fuchsia" >
+                                <c:forEach items="${myActiveOrdersMap.values()}" var="cur" varStatus="loop">
+
+                                    <tr bgcolor="fuchsia" >
 
                                            <!-- <c:out value="${cur.creation_time}" />/ -->
-                                    <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
-                                    <td> Order Number:<c:out value="${cur.order_id}" /></td>
-                                </tr>
-                                <tr>
-                                    <td >
-                                        <table id="orderTable"    class="table-bordered table-hover ">
+                                        <td>Due-Day <b><c:out value="${cur.due_day}" /></b></td>
+                                        <td> Order Number:<c:out value="${cur.order_id}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td >
+                                            <table id="orderTable"    class="table-bordered table-hover ">
 
-                                            <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
-                                                <tr class = "active" bgcolor="lime" >
-                                                   <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
-                                                    <td><b><c:out value="${curr.product.selling_name}" /></b></td>
-                                                    <td><b><c:out value="${curr.quantity}" /></b></td>
+                                                <c:forEach items="${cur.orderItems}" var="curr" varStatus="loop">
+                                                    <tr class = "active" bgcolor="lime" >
+                                                       <!-- <td><b><c:out value="${curr.product.product_id}" /></b></td>-->
+                                                        <td><b><c:out value="${curr.product.selling_name}" /></b></td>
+                                                        <td><b><c:out value="${curr.quantity}" /></b></td>
 
-                                                </tr>
-                                            </c:forEach>
-                                        </table>
-                                    </td>
-                                    <td> <button id="modifyButton"  class="btn btn-warning btn-sm btn-block"   onclick="location.href = '${pageContext.request.contextPath}/ModifyOrderPage.htm?order_id=${cur.order_id}'">ΔΙΟΡΘΩΣΗ ΠΑΡΑΓΓΕΛΙΑΣ</button></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+                                        </td>
+                                        <td> <button id="modifyButton"  class="btn btn-warning btn-sm btn-block"   onclick="location.href = '${pageContext.request.contextPath}/ModifyOrderPage.htm?order_id=${cur.order_id}'">ΔΙΟΡΘΩΣΗ ΠΑΡΑΓΓΕΛΙΑΣ</button></td>
 
-                                </tr>
-                            </c:forEach>
-                            <tfoot>
-                                <tr>
-                                    <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/AdminOrderPage.htm?user_id=${user.user_id}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
-                                    <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${user.user_id}'">ΡΥΘΜΙΣΕΙΣ</button></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                    </tr>
+                                </c:forEach>
+                                <tfoot>
+                                    <tr>
+                                        <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/NewOrderPage.htm?user_id=${user.user_id}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
+                                        <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${user.user_id}'">ΡΥΘΜΙΣΕΙΣ</button></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+
+                        <hr>
                     </div>
-
-
-
-                    <hr>
                 </div>
             </div>
         </div>

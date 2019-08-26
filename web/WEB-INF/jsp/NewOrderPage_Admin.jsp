@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 
-        <title>Order Page</title>
+        <title>NEW ORDER</title>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -55,14 +55,15 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Products.htm">ΠΡΟΪΟΝΤΑ</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm">ΤΑΜΠΕΛΕΣ</a>
+                                </li>
                             </ul>
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/Observers.htm">STAFF</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/Labels.htm">ΤΑΜΠΕΛΕΣ</a>
-                                </li>
+
                             </ul>
 
                             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -74,8 +75,7 @@
                     </nav>
 
                     <div class="table-responsive">
-                        <h1>Admin Order Page</h1>
-                        <h1>${customer.username}'s Favorite Products</h1>
+                        <h3>ΚΑΤΑΧΩΡΗΣΕ ΚΑΙΝΟΥΡΓΙΑ ΠΑΡΑΓΓΕΛΙΑ ΓΙΑ <p>${customer.username}<p/></h3> 
                         <hr>
                         <button  class="btn btn-info btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/LoadMyLastOrder.htm?user_id=${customer.user_id}'">LOAD MY LAST ORDER</button>
                         &#160;  &#160;
