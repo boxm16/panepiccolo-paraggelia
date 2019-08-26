@@ -182,7 +182,7 @@ public class OrderDao {
                 int operator = rs.getInt("operator");
                 String operation_time = rs.getString("operation_time");
                 List<OrderItem> orderItems = getOrderItemsByOrderId(order_id);
-
+//really man, really, ???????? one connection for each item. it`s not even funny. change it
                 order.setOrderer(orderer);
                 order.setStatus(status);
                 order.setCreation_time(creation_time);

@@ -444,9 +444,31 @@ public class OrderController {
     @RequestMapping(value = "/displayOrder.htm", method = RequestMethod.GET)
     public String dispalyOrder(ModelMap model, HttpSession session, @RequestParam(value = "order_id") int order_id) {
 
+        User user = (User) session.getAttribute("user");
+        String message = "User`s status undefined.";
+        String returnPoint = "Error";
+        if (user.getRole().equals("customer")) {
+            message = "";
+            returnPoint = "index";
+
+        }
         Order order = orderDao.getOrderByID(order_id);
+
         model.addAttribute("order", order);
-        return "DisplayOrder";
+        model.addAttribute("message", message);
+
+        if (user.getRole().equals("admin")) {
+            message = "";
+            returnPoint = "DisplayOrder_Admin";
+
+        }
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "DisplayOrder_Staff";
+
+        }
+        return returnPoint;
+
     }
 
     @RequestMapping(value = "/LoadMyLastOrder.htm", method = RequestMethod.GET)
