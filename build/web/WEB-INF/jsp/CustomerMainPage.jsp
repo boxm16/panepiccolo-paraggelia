@@ -81,7 +81,7 @@
                                 <tfoot>
                                     <tr>
                                         <td><button   class="btn btn-primary btn-lg" onclick="location.href = '${pageContext.request.contextPath}/NewOrderPage.htm?user_id=${user.user_id}'">ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ</button></td>
-                                        <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/FavoritProductsList.htm?user_id=${user.user_id}'">ΡΥΘΜΙΣΕΙΣ</button></td>
+                                        <td><button  class="btn btn-secondary btn-sm"  onclick="location.href = '${pageContext.request.contextPath}/OrderPlan.htm?user_id=${user.user_id}'">ΡΥΘΜΙΣΕΙΣ ΠΑΡΑΓΓΕΛΙΩΝ</button></td>
                                     </tr>
                                 </tfoot>
                             </table>

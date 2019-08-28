@@ -125,17 +125,22 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/ModifyOrderPage.htm", method = RequestMethod.GET)
-    public String goToModifyOrderPage(ModelMap model, HttpSession session,
-            @RequestParam(value = "order_id") int order_id
+    public String goToModifyOrderPage(ModelMap model, HttpSession session, @RequestParam(value = "order_id") int order_id
     ) {
         User user = (User) session.getAttribute("user");
-        /*
-        if (!user.getRole().equals("admin")) {
-            return "index";
-        }*/
-        Order order = orderDao.getOrderByID(order_id);
-        model.addAttribute("order", order);
-        return "ModifyOrderPage";
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            Order order = orderDao.getOrderByID(order_id);
+            model.addAttribute("order", order);
+            if (user.getRole().equals("admin")) {
+                returnPoint = "ModifyOrderPage_Admin";
+            }
+            if (user.getRole().equals("customer")) {
+                returnPoint = "ModifyOrderPage_Customer";
+            }
+        }
+        return returnPoint;
     }
 
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
@@ -143,13 +148,28 @@ public class OrderController {
             HttpSession session
     ) {
         User user = (User) session.getAttribute("user");
-
-        if (!user.getRole().equals("admin")) {
-            return "index";
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "index";
         }
-        int newOrderId = orderDao.insertOrder(order);
-        orderDao.modifyOrder(order, newOrderId, session);
-        return "redirect:/AdminMainPage.htm";
+
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            int newOrderId = orderDao.insertOrder(order);
+            orderDao.modifyOrder(order, newOrderId, session);
+
+            if (user.getRole().equals("admin")) {
+
+                returnPoint = "redirect:/AdminMainPage.htm";
+            }
+
+            if (user.getRole().equals("customer")) {
+
+                returnPoint = "redirect:/CustomerMainPage.htm";
+            }
+        }
+        return returnPoint;
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
@@ -195,36 +215,42 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/autogeneratorActivation.htm", method = RequestMethod.GET)
-    public String autogeneratorActivation(HttpSession session, ModelMap model,
-            @RequestParam(value = "user_id") int user_id
-    ) {
+    public String autogeneratorActivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
         User user = (User) session.getAttribute("user");
-
-        if (!user.getRole().equals("admin")) {
-            return "index";
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
+        if (user.getRole().equals("observer")) {
+            message = "";
+            returnPoint = "index";
         }
-        if (!orderTemplateDao.autogeneratorActivated(user_id)) {
 
-            List< FavoriteProduct> favoriteProductsList = favoriteProductsDao.getFavoriteProductsByCustomerID(user_id);
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            if (!orderTemplateDao.autogeneratorActivated(user_id)) {
 
-            orderTemplateDao.activateAutogenerator(user_id, favoriteProductsList);
+                List< FavoriteProduct> favoriteProductsList = favoriteProductsDao.getFavoriteProductsByCustomerID(user_id);
+
+                orderTemplateDao.activateAutogenerator(user_id, favoriteProductsList);
+            }
+            message = "";
+            returnPoint = "redirect:/OrderPlan.htm?user_id=" + user_id + "&day=NoDay";
         }
-        return "redirect:/OrderPlan.htm?user_id=" + user_id + "&day=NoDay";
+        model.addAttribute("message", message);
+        return returnPoint;
 
     }
 
     @RequestMapping(value = "/autogeneratorDeactivation.htm", method = RequestMethod.GET)
-    public String autogeneratorDeactivation(HttpSession session, ModelMap model,
-            @RequestParam(value = "user_id") int user_id
+    public String autogeneratorDeactivation(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id
     ) {
         User user = (User) session.getAttribute("user");
-
-        if (!user.getRole().equals("admin")) {
-            return "index";
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            orderTemplateDao.deactivateAutogenerator(user_id);
+            returnPoint = "redirect:/OrderPlan.htm?user_id=" + user_id + "&day=NoDay";
         }
-        orderTemplateDao.deactivateAutogenerator(user_id);
-
-        return "redirect:/OrderPlan.htm?user_id=" + user_id + "&day=NoDay";
+        model.addAttribute("message", message);
+        return returnPoint;
 
     }
 
@@ -480,7 +506,7 @@ public class OrderController {
         User user = (User) session.getAttribute("user");
         String message = "User`s status undefined.";
         String returnPoint = "ErrorPage";
-        
+
         if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
             Order order = orderDao.getMyLastOrder(user_id);
             User customer = userDao.getUserByID(user_id);

@@ -12,6 +12,7 @@ import Models.OrderTemplate;
 import Models.TemplateItem;
 import Models.User;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,37 +34,56 @@ public class TemplateController {
     private OrderTemplateDao orderTemplateDao;
 
     @RequestMapping(value = "/OrderPlan.htm", method = RequestMethod.GET)
-    public String orderPlan(ModelMap model, @RequestParam(value = "user_id") int user_id) {
+    public String orderPlan(HttpSession session, ModelMap model, @RequestParam(value = "user_id") int user_id) {
+        User user = (User) session.getAttribute("user");
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
 
-        User customer = userDao.getUserByID(user_id);
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            User customer = userDao.getUserByID(user_id);
 
-        //List<OrderItem> orderItems = orderTemplateDao.getOrderTemplate(user_id, day);
-        List<TemplateItem> templateItems = orderTemplateDao.getOrderTemplate(user_id);
+            List<TemplateItem> templateItems = orderTemplateDao.getOrderTemplate(user_id);
 
-        if (templateItems.size() > 0) {
-            OrderTemplate orderTemplate = new OrderTemplate();
-            orderTemplate.setUser_id(user_id);
+            if (templateItems.size() > 0) {
+                OrderTemplate orderTemplate = new OrderTemplate();
+                orderTemplate.setUser_id(user_id);
 
-            orderTemplate.setTemplateItems(templateItems);
-            model.addAttribute("orderTemplate", orderTemplate);
+                orderTemplate.setTemplateItems(templateItems);
+                model.addAttribute("orderTemplate", orderTemplate);
 
-            //  model.addAttribute("favoriteProductsList", favoriteProductsList);
-            model.addAttribute("customer", customer);
-        } else {
+                model.addAttribute("customer", customer);
+            } else {
 
-            String message = "You have not yet activated Order Autogenerator";
-            model.addAttribute("message", message);
-            model.addAttribute("customer", customer);
+                message = "ORDER AUTOGENERATION IS NOT ACTIVATED";
+                model.addAttribute("message", message);
+                model.addAttribute("customer", customer);
+            }
+            if (user.getRole().equals("admin")) {
+                returnPoint = "OrderPlan_Admin";
+            }
+            if (user.getRole().equals("customer")) {
+                returnPoint = "OrderPlan_Customer";
+            }
         }
 
-        return "OrderPlan";
+        return returnPoint;
 
     }
 
     @RequestMapping(value = "/saveTemplate", method = RequestMethod.POST)
-    public String storeCategory2(ModelMap model, OrderTemplate orderTemplate) {
+    public String storeCategory2(HttpSession session, ModelMap model, OrderTemplate orderTemplate) {
+        User user = (User) session.getAttribute("user");
+        String message = "User`s status undefined.";
+        String returnPoint = "ErrorPage";
 
-          orderTemplateDao.updateOrderTemplate(orderTemplate);
-        return "redirect:AdminMainPage.htm";
+        if (user.getRole().equals("admin") | user.getRole().equals("customer")) {
+            orderTemplateDao.updateOrderTemplate(orderTemplate);
+            if(user.getRole().equals("admin")) {
+                returnPoint="redirect:AdminMainPage.htm";
+            }
+            if(user.getRole().equals("customer")){
+             returnPoint="redirect:CustomerMainPage.htm";}
+        }
+        return returnPoint;
     }
 }
